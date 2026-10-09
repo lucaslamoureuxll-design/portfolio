@@ -1,0 +1,20 @@
+{
+  "name": "Lucas Lamoureux",
+  "role": "Développeur Full-Stack",
+  "tagline": "Je conçois des interfaces rapides, accessibles et soignées.",
+  "intro": "Passionné par le web moderne, je construis des produits de bout en bout avec React, Next.js et TypeScript. J'aime les interfaces épurées, le code lisible et les projets qui ont un impact concret.",
+  "location": "France",
+  "available": true,
+  "email": "contact@example.com",
+  "avatar": "",
+  "resume": "",
+  "socials": {
+    "github": "https://github.com/lucaslamoureuxll-design",
+    "linkedin": "https://www.linkedin.com/in/votre-profil",
+    "twitter": "https://x.com/votre-compte"
+  },
+  "seo": {
+    "title": "Lucas Lamoureux — Développeur Full-Stack",
+    "description": "Portfolio de Lucas Lamoureux : projets, parcours et contact."
+  }
+}

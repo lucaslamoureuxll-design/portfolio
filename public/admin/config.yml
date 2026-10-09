@@ -1,0 +1,106 @@
+# Configuration de Decap CMS — https://decapcms.org/docs/configuration-options/
+#
+# ⚠️ Remplacez "repo" par "<votre-utilisateur>/<votre-depot>" si vous forkez ce projet.
+
+backend:
+  name: github
+  repo: lucaslamoureuxll-design/portfolio
+  branch: main
+  commit_messages:
+    create: "contenu : création de {{collection}} « {{slug}} »"
+    update: "contenu : mise à jour de {{collection}} « {{slug}} »"
+    delete: "contenu : suppression de {{collection}} « {{slug}} »"
+    uploadMedia: "média : ajout de {{path}}"
+    deleteMedia: "média : suppression de {{path}}"
+
+# En local : lancez `npm run cms` puis ouvrez http://localhost:3000/admin
+# (aucune authentification, les fichiers sont modifiés directement sur le disque).
+local_backend: true
+
+locale: fr
+site_url: /
+display_url: /
+logo_url: ""
+
+media_folder: public/images/uploads
+public_folder: /images/uploads
+
+collections:
+  - name: settings
+    label: Réglages
+    files:
+      - name: site
+        label: Informations du site
+        file: content/settings/site.json
+        fields:
+          - { name: name, label: Nom, widget: string }
+          - { name: role, label: Titre / Métier, widget: string }
+          - { name: tagline, label: Accroche, widget: string }
+          - { name: intro, label: Présentation, widget: text }
+          - { name: location, label: Localisation, widget: string, required: false }
+          - { name: available, label: "Afficher le badge « Disponible »", widget: boolean, default: true }
+          - { name: email, label: E-mail de contact, widget: string }
+          - { name: avatar, label: Photo de profil, widget: image, required: false }
+          - { name: resume, label: CV (PDF), widget: file, required: false }
+          - name: socials
+            label: Réseaux sociaux
+            widget: object
+            fields:
+              - { name: github, label: GitHub (URL), widget: string, required: false }
+              - { name: linkedin, label: LinkedIn (URL), widget: string, required: false }
+              - { name: twitter, label: Twitter / X (URL), widget: string, required: false }
+          - name: seo
+            label: Référencement (SEO)
+            widget: object
+            fields:
+              - { name: title, label: Titre de la page d'accueil, widget: string }
+              - { name: description, label: Description, widget: text }
+
+  - name: projects
+    label: Projets
+    label_singular: Projet
+    folder: content/projects
+    extension: mdx
+    format: frontmatter
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} — {{date}}"
+    sortable_fields: [date, title]
+    preview_path: "projets/{{slug}}"
+    fields:
+      - { name: title, label: Titre, widget: string }
+      - { name: summary, label: Résumé (carte), widget: text }
+      - { name: date, label: Date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
+      - { name: technologies, label: Technologies, widget: list, hint: "Une technologie par entrée — sert aux filtres." }
+      - { name: cover, label: Image de couverture, widget: image, required: false }
+      - { name: github, label: Lien GitHub, widget: string, required: false }
+      - { name: demo, label: Lien démo / site, widget: string, required: false }
+      - { name: featured, label: Mettre en avant sur l'accueil, widget: boolean, default: false }
+      - { name: draft, label: Brouillon (masqué), widget: boolean, default: false }
+      - { name: body, label: Description détaillée, widget: markdown }
+
+  - name: experiences
+    label: Parcours
+    label_singular: Expérience
+    folder: content/experiences
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{start}}-{{organization}}"
+    identifier_field: role
+    summary: "{{role}} · {{organization}} ({{start}})"
+    fields:
+      - name: kind
+        label: Type
+        widget: select
+        options:
+          - { label: Expérience professionnelle, value: work }
+          - { label: Formation, value: education }
+        default: work
+      - { name: role, label: Poste / Diplôme, widget: string }
+      - { name: organization, label: Entreprise / École, widget: string }
+      - { name: location, label: Lieu, widget: string, required: false }
+      - { name: start, label: Début, widget: datetime, format: "YYYY-MM", date_format: "MM/YYYY", time_format: false }
+      - { name: end, label: "Fin (vide = en cours)", widget: datetime, format: "YYYY-MM", date_format: "MM/YYYY", time_format: false, required: false }
+      - { name: technologies, label: Technologies, widget: list, required: false }
+      - { name: body, label: Description, widget: markdown, required: false }
