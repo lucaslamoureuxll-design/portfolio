@@ -1,20 +1,27 @@
 {
   "name": "Lucas Lamoureux",
-  "role": "Développeur Full-Stack",
-  "tagline": "Je conçois des interfaces rapides, accessibles et soignées.",
-  "intro": "Passionné par le web moderne, je construis des produits de bout en bout avec React, Next.js et TypeScript. J'aime les interfaces épurées, le code lisible et les projets qui ont un impact concret.",
+  "role": "Étudiant en BUT MMI",
+  "tagline": "Je crée des expériences web modernes, entre design et développement.",
+  "intro": "Étudiant en BUT Métiers du Multimédia et de l'Internet, je touche à tout ce qui fait le web : design d'interfaces, développement, création de contenus et communication digitale. Ce portfolio rassemble mes projets et mon parcours.",
   "location": "France",
   "available": true,
-  "email": "contact@example.com",
+  "availabilityLabel": "Ouvert aux opportunités de stage",
+  "email": "lucas.lamoureux.ll@gmail.com",
   "avatar": "",
   "resume": "",
   "socials": {
-    "github": "https://github.com/lucaslamoureuxll-design",
-    "linkedin": "https://www.linkedin.com/in/votre-profil",
-    "twitter": "https://x.com/votre-compte"
+    "github": "",
+    "linkedin": "https://www.linkedin.com/in/lucas-lamoureux-b094923b5/",
+    "twitter": ""
   },
+  "skills": [
+    { "category": "Développement", "items": ["HTML / CSS", "JavaScript", "React", "Next.js", "Tailwind CSS"] },
+    { "category": "Design", "items": ["Figma", "UI / UX", "Photoshop", "Illustrator"] },
+    { "category": "Multimédia", "items": ["Premiere Pro", "After Effects", "Photographie"] },
+    { "category": "Communication", "items": ["Stratégie digitale", "Réseaux sociaux", "Rédaction web"] }
+  ],
   "seo": {
-    "title": "Lucas Lamoureux — Développeur Full-Stack",
-    "description": "Portfolio de Lucas Lamoureux : projets, parcours et contact."
+    "title": "Lucas Lamoureux — Étudiant en BUT MMI",
+    "description": "Portfolio de Lucas Lamoureux, étudiant en BUT Métiers du Multimédia et de l'Internet : projets, parcours et contact."
   }
 }

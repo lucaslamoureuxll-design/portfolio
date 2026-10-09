@@ -26,10 +26,12 @@ export type SiteSettings = {
   intro: string;
   location?: string;
   available?: boolean;
+  availabilityLabel?: string;
   email: string;
   avatar?: string;
   resume?: string;
   socials: SocialLinks;
+  skills?: { category: string; items: string[] }[];
   seo: { title: string; description: string };
 };
 
@@ -51,10 +53,12 @@ export type Experience = {
   slug: string;
   kind: "work" | "education";
   role: string;
-  organization: string;
+  organization?: string;
   location?: string;
   start: string;
   end?: string;
+  /** Mis en évidence comme « en cours » dans la timeline. */
+  current: boolean;
   technologies: string[];
   body: string;
 };
@@ -75,6 +79,7 @@ function readDir(dir: string, extensions: string[]) {
 /** Normalise une date YAML (Date ou string) en "YYYY-MM" ou "YYYY-MM-DD". */
 function toDateString(value: unknown): string {
   if (value instanceof Date) return value.toISOString().slice(0, 10);
+  if (typeof value === "number") return String(value); // « 2025 » sans guillemets en YAML
   return value ? String(value) : "";
 }
 
@@ -122,16 +127,18 @@ export async function getExperiences(): Promise<Experience[]> {
       slug,
       kind: data.kind === "education" ? ("education" as const) : ("work" as const),
       role: String(data.role ?? ""),
-      organization: String(data.organization ?? ""),
+      organization: data.organization ? String(data.organization) : undefined,
       location: data.location || undefined,
       start: toDateString(data.start),
       end: toDateString(data.end) || undefined,
+      current: Boolean(data.current) || !data.end,
       technologies: toStringList(data.technologies),
       body,
     }))
     .sort((a, b) => {
-      // Les postes en cours d'abord, puis par date de début décroissante.
-      if (!a.end !== !b.end) return a.end ? 1 : -1;
-      return b.start.localeCompare(a.start);
+      // Du plus récent au plus ancien : date de fin (vide = en cours), puis date de début.
+      const endA = a.end ?? "9999";
+      const endB = b.end ?? "9999";
+      return endB.localeCompare(endA) || b.start.localeCompare(a.start);
     });
 }

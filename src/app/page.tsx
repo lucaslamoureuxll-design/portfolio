@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRightIcon } from "@/components/icons";
 import { ProjectCard } from "@/components/project-card";
 import { SocialLinks } from "@/components/social-links";
+import { TechBadge } from "@/components/tech-badge";
 import { Timeline } from "@/components/timeline";
 import { getExperiences, getProjects, getSiteSettings } from "@/lib/content";
 
@@ -21,7 +22,7 @@ export default async function HomePage() {
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500 opacity-60" />
                 <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
               </span>
-              Disponible pour de nouveaux projets
+              {site.availabilityLabel || "Disponible pour de nouveaux projets"}
             </p>
           )}
           <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
@@ -46,7 +47,7 @@ export default async function HomePage() {
                 Me contacter
               </Link>
             </div>
-            <SocialLinks site={site} className="sm:ml-2" />
+            <SocialLinks site={site} showEmail className="sm:ml-2" />
           </div>
         </div>
 
@@ -56,6 +57,29 @@ export default async function HomePage() {
           </div>
         )}
       </section>
+
+      {/* Compétences */}
+      {site.skills && site.skills.length > 0 && (
+        <section aria-labelledby="competences-titre" className="pb-20 sm:pb-28">
+          <h2 id="competences-titre" className="mb-8 text-2xl font-semibold tracking-tight">
+            Compétences
+          </h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {site.skills.map((group) => (
+              <div key={group.category} className="reveal rounded-2xl border border-border bg-surface p-5">
+                <h3 className="text-sm font-medium text-accent">{group.category}</h3>
+                <ul className="mt-3 flex flex-wrap gap-1.5">
+                  {group.items.map((skill) => (
+                    <li key={skill}>
+                      <TechBadge>{skill}</TechBadge>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Projets mis en avant */}
       <section aria-labelledby="projets-titre" className="pb-20 sm:pb-28">

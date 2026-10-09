@@ -5,7 +5,7 @@ import { TechBadge } from "@/components/tech-badge";
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-surface transition hover:-translate-y-0.5 hover:border-foreground/20 hover:shadow-lg hover:shadow-black/5">
+    <article className="reveal group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-surface transition hover:-translate-y-0.5 hover:border-foreground/20 hover:shadow-lg hover:shadow-black/5">
       <div className="relative aspect-[16/9] overflow-hidden border-b border-border bg-background">
         <ProjectCover title={project.title} cover={project.cover} />
       </div>

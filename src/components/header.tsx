@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { CloseIcon, MenuIcon } from "@/components/icons";
+import { OPEN_PALETTE_EVENT } from "@/components/command-palette";
+import { CloseIcon, MenuIcon, SearchIcon } from "@/components/icons";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const NAV = [
@@ -12,6 +13,21 @@ const NAV = [
   { href: "/parcours", label: "Parcours" },
   { href: "/contact", label: "Contact" },
 ];
+
+function SearchButton() {
+  return (
+    <button
+      type="button"
+      onClick={() => window.dispatchEvent(new Event(OPEN_PALETTE_EVENT))}
+      aria-label="Recherche rapide (Ctrl + K)"
+      title="Recherche rapide (Ctrl + K)"
+      className="flex h-9 items-center gap-2 rounded-full px-2.5 text-muted transition hover:bg-foreground/5 hover:text-foreground lg:border lg:border-border lg:pr-2"
+    >
+      <SearchIcon className="size-[18px]" />
+      <kbd className="hidden rounded border border-border px-1.5 font-sans text-[11px] lg:inline">⌘K</kbd>
+    </button>
+  );
+}
 
 export function Header({ name }: { name: string }) {
   const pathname = usePathname();
@@ -40,10 +56,12 @@ export function Header({ name }: { name: string }) {
             </Link>
           ))}
           <span className="mx-1 h-5 w-px bg-border" aria-hidden="true" />
+          <SearchButton />
           <ThemeToggle />
         </nav>
 
         <div className="flex items-center gap-1 md:hidden">
+          <SearchButton />
           <ThemeToggle />
           <button
             type="button"

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { CommandPalette } from "@/components/command-palette";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
-import { getSiteSettings } from "@/lib/content";
+import { getProjects, getSiteSettings } from "@/lib/content";
 import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 
@@ -35,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
-  const site = await getSiteSettings();
+  const [site, projects] = await Promise.all([getSiteSettings(), getProjects()]);
 
   return (
     <html
@@ -56,6 +57,11 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             {children}
           </main>
           <Footer site={site} />
+          <CommandPalette
+            projects={projects.map(({ slug, title, technologies }) => ({ slug, title, technologies }))}
+            email={site.email}
+            linkedin={site.socials.linkedin || undefined}
+          />
         </ThemeProvider>
       </body>
     </html>
