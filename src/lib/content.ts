@@ -32,7 +32,7 @@ export type SiteSettings = {
   resume?: string;
   socials: SocialLinks;
   skills?: { category: string; items: string[] }[];
-  seo: { title: string; description: string };
+  seo: { title: string; description: string; keywords?: string[] };
 };
 
 export type Project = {

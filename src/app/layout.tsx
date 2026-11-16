@@ -7,7 +7,7 @@ import { KineticBackground } from "@/components/kinetic-background";
 import { Header } from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { getProjects, getSiteSettings } from "@/lib/content";
-import { getSiteUrl } from "@/lib/site-url";
+import { getSiteUrl, isProduction } from "@/lib/site-url";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,12 +26,23 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(getSiteUrl()),
     title: { default: site.seo.title, template: `%s · ${site.name}` },
     description: site.seo.description,
+    keywords: site.seo.keywords,
+    applicationName: `Portfolio de ${site.name}`,
+    authors: [{ name: site.name, url: getSiteUrl() }],
+    creator: site.name,
+    alternates: { canonical: "/" },
+    // Seul le site de production est indexé (pas les prévisualisations Vercel).
+    robots: isProduction() ? { index: true, follow: true } : { index: false, follow: false },
+    verification: process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : undefined,
     openGraph: {
-      type: "website",
+      type: "profile",
       locale: "fr_FR",
-      siteName: site.name,
+      url: "/",
+      siteName: `Portfolio de ${site.name}`,
       title: site.seo.title,
       description: site.seo.description,
+      firstName: site.name.split(" ")[0],
+      lastName: site.name.split(" ").slice(1).join(" "),
     },
     twitter: { card: "summary_large_image", title: site.seo.title, description: site.seo.description },
   };

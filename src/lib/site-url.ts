@@ -5,3 +5,8 @@ export function getSiteUrl(): string {
   if (process.env.VERCEL_PROJECT_PRODUCTION_URL) return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
   return "http://localhost:3000";
 }
+
+/** Vrai pour le site en production ; faux pour les prévisualisations Vercel et le local. */
+export function isProduction(): boolean {
+  return process.env.VERCEL_ENV === "production";
+}

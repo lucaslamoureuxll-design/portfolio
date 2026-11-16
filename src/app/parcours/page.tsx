@@ -6,7 +6,8 @@ import { getExperiences, getSiteSettings } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Parcours",
-  description: "Expériences professionnelles et formation.",
+  description: "Parcours et formation de Lucas Lamoureux : BUT MMI, baccalauréat technologique, brevet.",
+  alternates: { canonical: "/parcours" },
 };
 
 export default async function ExperiencePage() {

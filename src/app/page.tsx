@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRightIcon } from "@/components/icons";
+import { PersonJsonLd } from "@/components/json-ld";
 import { GlowPanel } from "@/components/glow-panel";
 import { ProjectCarousel } from "@/components/project-carousel";
 import { SocialLinks } from "@/components/social-links";
@@ -15,6 +16,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <PersonJsonLd site={site} />
       {/* Hero */}
       <section className="flex flex-col-reverse gap-10 pb-20 sm:pb-28 md:flex-row md:items-center md:justify-between">
         <div className="max-w-2xl">
