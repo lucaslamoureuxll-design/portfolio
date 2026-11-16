@@ -8,7 +8,8 @@ import { getSiteSettings } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Une question, un projet ? Écrivez-moi.",
+  description: "Contacter Lucas Lamoureux, étudiant en BUT MMI : stage, projet ou simple question.",
+  alternates: { canonical: "/contact" },
 };
 
 export default async function ContactPage() {

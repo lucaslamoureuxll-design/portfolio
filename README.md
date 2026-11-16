@@ -211,6 +211,21 @@ Seules les personnes ayant un accès en écriture au dépôt GitHub peuvent modi
 
 > Si vous changez de domaine, mettez à jour l'URL de callback de l'application OAuth GitHub.
 
+## 7. Référencement Google (SEO)
+
+Déjà en place : titre et description de chaque page, URL canoniques, `sitemap.xml`, `robots.txt`, images de partage, données structurées schema.org (Person, WebSite, ProfilePage), et non-indexation des prévisualisations Vercel.
+
+Pour apparaître dans Google sur « Lucas Lamoureux portfolio » :
+
+1. Ouvrez <https://search.google.com/search-console>, cliquez sur **Ajouter une propriété → Préfixe d'URL** et saisissez l'adresse du site.
+2. Choisissez la méthode **Balise HTML**, puis copiez la valeur `content="…"`.
+3. Dans Vercel (*Settings → Environment Variables*), ajoutez `GOOGLE_SITE_VERIFICATION` avec cette valeur, puis redéployez.
+4. Dans Search Console, cliquez sur **Valider**, puis dans **Sitemaps** ajoutez `sitemap.xml`.
+5. Dans **Inspection de l'URL**, collez l'adresse du site et cliquez sur **Demander l'indexation**.
+6. Ajoutez le lien du portfolio sur votre profil LinkedIn (section *Coordonnées → Site web*) : un lien depuis un profil connu accélère l'indexation.
+
+L'apparition dans les résultats prend en général de quelques jours à deux semaines.
+
 ## Personnalisation du design
 
 - **Couleurs** : variables CSS en haut de `src/app/globals.css` (`--accent`, `--background`…), pour le thème clair et le thème sombre.

@@ -53,7 +53,18 @@
     }
   ],
   "seo": {
-    "title": "Lucas Lamoureux — Étudiant en BUT MMI",
-    "description": "Portfolio de Lucas Lamoureux, étudiant en BUT Métiers du Multimédia et de l'Internet : projets, parcours et contact."
+    "title": "Bienvenue sur mon portfolio ! | Lucas Lamoureux",
+    "description": "Portfolio de Lucas Lamoureux, étudiant en BUT MMI (Métiers du Multimédia et de l'Internet) : projets web et design, compétences, parcours et contact.",
+    "keywords": [
+      "Lucas Lamoureux",
+      "Lamoureux Lucas",
+      "portfolio Lucas Lamoureux",
+      "Lucas Lamoureux portfolio",
+      "BUT MMI",
+      "étudiant MMI",
+      "développeur web",
+      "design web",
+      "portfolio étudiant"
+    ]
   }
 }

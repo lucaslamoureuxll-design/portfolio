@@ -5,7 +5,8 @@ import { getProjects } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Projets",
-  description: "Sélection de projets personnels et professionnels.",
+  description: "Sélection de projets personnels et professionnels de Lucas Lamoureux, étudiant en BUT MMI.",
+  alternates: { canonical: "/projets" },
 };
 
 export default async function ProjectsPage() {
