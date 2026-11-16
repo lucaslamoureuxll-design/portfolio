@@ -12,6 +12,9 @@ Portfolio moderne, épuré et responsive, dont **tout le contenu est stocké dan
 
 - **Recherche rapide** : `Ctrl + K` / `⌘K` (ou `/`) ouvre une palette pour aller sur une page ou un projet, rechercher une technologie, copier l'e-mail, ouvrir LinkedIn ou changer de thème.
 - **Section Compétences** sur l'accueil, éditable dans le CMS.
+- **Carrousel de projets** sur l'accueil : un grand projet à la fois, flèches ← →, points de pagination, glissement au doigt.
+- **Fond interactif** (`src/components/ui/kinetic-grid.tsx`) : une grille qui se déforme autour du curseur et fait une onde à chaque clic, en blanc ou en noir selon le thème.
+- **Cartes lumineuses** (`src/components/ui/spotlight-card.tsx`) : un halo coloré suit le curseur sur le contour de chaque carte.
 - **Bouton « Copier l'e-mail »** sur la page Contact.
 - **Images de partage générées automatiquement** (aperçu LinkedIn, X, WhatsApp…) pour le site et pour chaque projet.
 - Fiches projet : **barre de progression de lecture**, temps de lecture estimé, navigation projet précédent / suivant.

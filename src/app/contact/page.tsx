@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/contact-form";
 import { CopyEmailButton } from "@/components/copy-email-button";
+import { GlowPanel } from "@/components/glow-panel";
 import { PageHeading } from "@/components/section-heading";
 import { SocialLinks } from "@/components/social-links";
 import { getSiteSettings } from "@/lib/content";
@@ -26,9 +27,11 @@ export default async function ContactPage() {
         <p className="mt-8 text-sm text-muted">Retrouvez-moi aussi sur :</p>
         <SocialLinks site={site} className="mt-3" />
       </div>
-      <div className="glass-card self-start rounded-[28px] p-6 sm:p-8">
-        <ContactForm email={site.email} />
-      </div>
+      <GlowPanel className="self-start">
+        <div className="glass-card rounded-[28px] p-6 sm:p-8">
+          <ContactForm email={site.email} />
+        </div>
+      </GlowPanel>
     </div>
   );
 }

@@ -15,10 +15,42 @@
     "twitter": ""
   },
   "skills": [
-    { "category": "Développement", "items": ["HTML / CSS", "JavaScript", "React", "Next.js", "Tailwind CSS"] },
-    { "category": "Design", "items": ["Figma", "UI / UX", "Photoshop", "Illustrator"] },
-    { "category": "Multimédia", "items": ["Premiere Pro", "After Effects", "Photographie"] },
-    { "category": "Communication", "items": ["Stratégie digitale", "Réseaux sociaux", "Rédaction web"] }
+    {
+      "category": "Développement",
+      "items": [
+        "HTML / CSS",
+        "JavaScript",
+        "React",
+        "Next.js",
+        "Développement IA"
+      ]
+    },
+    {
+      "category": "Design",
+      "items": [
+        "Figma",
+        "UI / UX",
+        "Photoshop",
+        "Illustrator"
+      ]
+    },
+    {
+      "category": "Multimédia",
+      "items": [
+        "Premiere Pro",
+        "After Effects",
+        "Photographie"
+      ]
+    },
+    {
+      "category": "Communication",
+      "items": [
+        "Stratégie digitale",
+        "Réseaux sociaux",
+        "Rédaction web",
+        "SEO / SEA"
+      ]
+    }
   ],
   "seo": {
     "title": "Lucas Lamoureux — Étudiant en BUT MMI",

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { CommandPalette } from "@/components/command-palette";
 import { Footer } from "@/components/footer";
 import { GlassPointer } from "@/components/glass-pointer";
+import { KineticBackground } from "@/components/kinetic-background";
 import { Header } from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import { getProjects, getSiteSettings } from "@/lib/content";
@@ -52,6 +53,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             <span />
             <span />
           </div>
+          <KineticBackground />
           <GlassPointer />
           <a
             href="#contenu"
