@@ -104,84 +104,86 @@ html {
   background: var(--blob-3);
 }
 
-/*
- * Matériau verre : translucide, flou + saturation de l'arrière-plan,
- * bord lumineux et reflet spéculaire en haut. Le reflet suit le pointeur
- * (variables --mx / --my mises à jour par <GlassPointer />).
- */
-.glass,
-.glass-card {
-  position: relative;
-  isolation: isolate;
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
-    inset 0 -1px 0 var(--glass-edge),
-    var(--glass-shadow);
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-}
-/* Surfaces de contenu : plus opaques pour garder un texte parfaitement lisible. */
-.glass-card {
-  background: var(--glass-bg-strong);
-}
-.glass::before,
-.glass-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  pointer-events: none;
-  background:
-    radial-gradient(240px circle at var(--mx, 50%) var(--my, -40%), rgb(255 255 255 / 0.28), transparent 60%),
-    linear-gradient(180deg, rgb(255 255 255 / 0.2), transparent 45%);
-  opacity: 0.9;
-}
-.dark .glass::before,
-.dark .glass-card::before {
-  background:
-    radial-gradient(240px circle at var(--mx, 50%) var(--my, -40%), rgb(255 255 255 / 0.1), transparent 60%),
-    linear-gradient(180deg, rgb(255 255 255 / 0.06), transparent 45%);
-}
-
-/* Effet de pression « liquide » sur les contrôles en verre. */
-.glass-press {
-  transition:
-    transform 260ms cubic-bezier(0.3, 1.6, 0.5, 1),
-    background-color 200ms ease,
-    box-shadow 200ms ease;
-}
-.glass-press:active {
-  transform: scale(0.96);
-}
-
-/* Navigateurs sans backdrop-filter : surfaces plus opaques. */
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+@layer components {
+  /*
+   * Matériau verre : translucide, flou + saturation de l'arrière-plan,
+   * bord lumineux et reflet spéculaire en haut. Le reflet suit le pointeur
+   * (variables --mx / --my mises à jour par <GlassPointer />).
+   */
   .glass,
+  .glass-card {
+    position: relative;
+    isolation: isolate;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow:
+      inset 0 1px 0 var(--glass-highlight),
+      inset 0 -1px 0 var(--glass-edge),
+      var(--glass-shadow);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+    backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  }
+  /* Surfaces de contenu : plus opaques pour garder un texte parfaitement lisible. */
   .glass-card {
     background: var(--glass-bg-strong);
   }
-}
+  .glass::before,
+  .glass-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background:
+      radial-gradient(240px circle at var(--mx, 50%) var(--my, -40%), rgb(255 255 255 / 0.28), transparent 60%),
+      linear-gradient(180deg, rgb(255 255 255 / 0.2), transparent 45%);
+    opacity: 0.9;
+  }
+  .dark .glass::before,
+  .dark .glass-card::before {
+    background:
+      radial-gradient(240px circle at var(--mx, 50%) var(--my, -40%), rgb(255 255 255 / 0.1), transparent 60%),
+      linear-gradient(180deg, rgb(255 255 255 / 0.06), transparent 45%);
+  }
 
-/* Accessibilité : « Réduire la transparence » → surfaces pleines, fond calme. */
-@media (prefers-reduced-transparency: reduce) {
-  .glass,
-  .glass-card {
-    background: var(--surface);
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
+  /* Effet de pression « liquide » sur les contrôles en verre. */
+  .glass-press {
+    transition:
+      transform 260ms cubic-bezier(0.3, 1.6, 0.5, 1),
+      background-color 200ms ease,
+      box-shadow 200ms ease;
   }
-  .ambient span {
-    display: none;
+  .glass-press:active {
+    transform: scale(0.96);
   }
-}
-@media (prefers-contrast: more) {
-  .glass,
-  .glass-card {
-    background: var(--surface);
-    border-color: var(--foreground);
+
+  /* Navigateurs sans backdrop-filter : surfaces plus opaques. */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass,
+    .glass-card {
+      background: var(--glass-bg-strong);
+    }
+  }
+
+  /* Accessibilité : « Réduire la transparence » → surfaces pleines, fond calme. */
+  @media (prefers-reduced-transparency: reduce) {
+    .glass,
+    .glass-card {
+      background: var(--surface);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+    .ambient span {
+      display: none;
+    }
+  }
+  @media (prefers-contrast: more) {
+    .glass,
+    .glass-card {
+      background: var(--surface);
+      border-color: var(--foreground);
+    }
   }
 }
 
@@ -368,4 +370,67 @@ body {
   to {
     transform: scaleX(1);
   }
+}
+
+/* ---------- Lueur « projecteur » des cartes (GlowCard, components/ui/spotlight-card.tsx) ---------- */
+
+[data-glow]::before,
+[data-glow]::after {
+  pointer-events: none;
+  content: "";
+  position: absolute;
+  inset: calc(var(--border-size) * -1);
+  border: var(--border-size) solid transparent;
+  border-radius: calc(var(--radius) * 1px);
+  background-attachment: fixed;
+  background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+  mask-clip: padding-box, border-box;
+  mask-composite: intersect;
+}
+
+[data-glow]::before {
+  background-image: radial-gradient(
+    calc(var(--spotlight-size) * 0.75) calc(var(--spotlight-size) * 0.75) at calc(var(--x, 0) * 1px)
+      calc(var(--y, 0) * 1px),
+    hsl(
+      var(--hue, 210) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) / var(--border-spot-opacity, 1)
+    ),
+    transparent 100%
+  );
+  filter: brightness(2);
+}
+
+[data-glow]::after {
+  background-image: radial-gradient(
+    calc(var(--spotlight-size) * 0.5) calc(var(--spotlight-size) * 0.5) at calc(var(--x, 0) * 1px)
+      calc(var(--y, 0) * 1px),
+    hsl(0 100% 100% / var(--border-light-opacity, 1)),
+    transparent 100%
+  );
+}
+
+[data-glow] [data-glow] {
+  position: absolute;
+  inset: 0;
+  will-change: filter;
+  opacity: var(--outer, 1);
+  border-radius: calc(var(--radius) * 1px);
+  border-width: calc(var(--border-size) * 20);
+  filter: blur(calc(var(--border-size) * 10));
+  background: none;
+  pointer-events: none;
+  border: none;
+}
+
+[data-glow] > [data-glow]::before {
+  inset: -10px;
+  border-width: 10px;
+}
+
+/* La carte en verre placée dans une GlowCard se pose au-dessus de la lueur. */
+[data-glow] > .glass-card {
+  z-index: 1;
 }

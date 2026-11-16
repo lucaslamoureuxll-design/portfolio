@@ -10,6 +10,7 @@
     "cms": "decap-server"
   },
   "dependencies": {
+    "clsx": "^2.1.1",
     "gray-matter": "^4.0.3",
     "next": "16.4.0",
     "next-mdx-remote": "^6.0.0",
@@ -17,7 +18,8 @@
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "rehype-slug": "^6.0.0",
-    "remark-gfm": "^4.0.1"
+    "remark-gfm": "^4.0.1",
+    "tailwind-merge": "^3.7.0"
   },
   "devDependencies": {
     "@tailwindcss/turbopack": "^4",

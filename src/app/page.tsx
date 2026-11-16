@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRightIcon } from "@/components/icons";
-import { ProjectCard } from "@/components/project-card";
+import { GlowPanel } from "@/components/glow-panel";
+import { ProjectCarousel } from "@/components/project-carousel";
 import { SocialLinks } from "@/components/social-links";
 import { TechBadge } from "@/components/tech-badge";
 import { Timeline } from "@/components/timeline";
@@ -9,7 +10,8 @@ import { getExperiences, getProjects, getSiteSettings } from "@/lib/content";
 
 export default async function HomePage() {
   const [site, projects, experiences] = await Promise.all([getSiteSettings(), getProjects(), getExperiences()]);
-  const featured = (projects.some((p) => p.featured) ? projects.filter((p) => p.featured) : projects).slice(0, 4);
+  // Projets mis en avant d'abord, puis les autres (du plus récent au plus ancien).
+  const carouselProjects = [...projects.filter((p) => p.featured), ...projects.filter((p) => !p.featured)];
 
   return (
     <>
@@ -75,16 +77,18 @@ export default async function HomePage() {
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {site.skills.map((group) => (
-              <div key={group.category} className="reveal glass-card rounded-[28px] p-5">
-                <h3 className="text-sm font-medium text-accent">{group.category}</h3>
-                <ul className="mt-3 flex flex-wrap gap-1.5">
-                  {group.items.map((skill) => (
-                    <li key={skill}>
-                      <TechBadge>{skill}</TechBadge>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <GlowPanel key={group.category} className="reveal">
+                <div className="glass-card h-full rounded-[28px] p-5">
+                  <h3 className="text-sm font-medium text-accent">{group.category}</h3>
+                  <ul className="mt-3 flex flex-wrap gap-1.5">
+                    {group.items.map((skill) => (
+                      <li key={skill}>
+                        <TechBadge>{skill}</TechBadge>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </GlowPanel>
             ))}
           </div>
         </section>
@@ -94,17 +98,16 @@ export default async function HomePage() {
       <section aria-labelledby="projets-titre" className="pb-20 sm:pb-28">
         <div className="mb-8 flex items-end justify-between gap-4">
           <h2 id="projets-titre" className="text-2xl font-semibold tracking-tight">
-            Projets sélectionnés
+            Projets
           </h2>
-          <Link href="/projets" className="glass glass-press inline-flex items-center gap-1 rounded-full px-3.5 py-1.5 text-sm text-muted hover:text-foreground">
-            Tous les projets <ArrowRightIcon className="size-4" />
+          <Link
+            href="/projets"
+            className="glass glass-press inline-flex items-center gap-1 rounded-full px-3.5 py-1.5 text-sm text-muted hover:text-foreground"
+          >
+            Voir tous les projets <ArrowRightIcon className="size-4" />
           </Link>
         </div>
-        <div className="grid gap-6 sm:grid-cols-2">
-          {featured.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
-          ))}
-        </div>
+        <ProjectCarousel projects={carouselProjects} />
       </section>
 
       {/* Aperçu du parcours */}
@@ -114,13 +117,18 @@ export default async function HomePage() {
             <h2 id="parcours-titre" className="text-2xl font-semibold tracking-tight">
               Parcours
             </h2>
-            <Link href="/parcours" className="glass glass-press inline-flex items-center gap-1 rounded-full px-3.5 py-1.5 text-sm text-muted hover:text-foreground">
+            <Link
+              href="/parcours"
+              className="glass glass-press inline-flex items-center gap-1 rounded-full px-3.5 py-1.5 text-sm text-muted hover:text-foreground"
+            >
               Tout le parcours <ArrowRightIcon className="size-4" />
             </Link>
           </div>
-          <div className="glass-card rounded-[28px] p-6 sm:p-8">
-            <Timeline items={experiences.slice(0, 3)} />
-          </div>
+          <GlowPanel>
+            <div className="glass-card rounded-[28px] p-6 sm:p-8">
+              <Timeline items={experiences.slice(0, 3)} />
+            </div>
+          </GlowPanel>
         </section>
       )}
     </>

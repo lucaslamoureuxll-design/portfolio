@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeftIcon, ArrowRightIcon, ExternalLinkIcon, GitHubIcon } from "@/components/icons";
+import { GlowPanel } from "@/components/glow-panel";
 import { Markdown } from "@/components/markdown";
 import { ProjectCover } from "@/components/project-cover";
 import { TechBadge } from "@/components/tech-badge";
@@ -86,13 +87,17 @@ export default async function ProjectPage({ params }: PageProps<"/projets/[slug]
         )}
       </header>
 
-      <div className="glass-card relative my-10 aspect-[16/9] overflow-hidden rounded-[28px]">
-        <ProjectCover title={project.title} cover={project.cover} priority />
-      </div>
+      <GlowPanel className="my-10">
+        <div className="glass-card relative aspect-[16/9] overflow-hidden rounded-[28px]">
+          <ProjectCover title={project.title} cover={project.cover} priority />
+        </div>
+      </GlowPanel>
 
-      <div className="glass-card rounded-[28px] p-6 sm:p-10">
-        <Markdown source={project.body} />
-      </div>
+      <GlowPanel>
+        <div className="glass-card rounded-[28px] p-6 sm:p-10">
+          <Markdown source={project.body} />
+        </div>
+      </GlowPanel>
 
       {(older || newer) && (
         <nav aria-label="Autres projets" className="mt-10 grid gap-4 sm:grid-cols-2">
@@ -107,10 +112,7 @@ export default async function ProjectPage({ params }: PageProps<"/projets/[slug]
             <span className="hidden sm:block" />
           )}
           {newer && (
-            <Link
-              href={`/projets/${newer.slug}`}
-              className="glass glass-press group rounded-3xl p-5 text-right"
-            >
+            <Link href={`/projets/${newer.slug}`} className="glass glass-press group rounded-3xl p-5 text-right">
               <span className="flex items-center justify-end gap-1.5 text-xs text-muted">
                 Projet suivant <ArrowRightIcon className="size-3.5 transition group-hover:translate-x-0.5" />
               </span>

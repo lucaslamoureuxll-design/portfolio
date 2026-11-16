@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { GlowPanel } from "@/components/glow-panel";
 import { PageHeading } from "@/components/section-heading";
 import { Timeline } from "@/components/timeline";
 import { getExperiences, getSiteSettings } from "@/lib/content";
@@ -18,16 +19,23 @@ export default async function ExperiencePage() {
         {site.resume && (
           <>
             {" "}
-            <a href={site.resume} className="text-accent underline-offset-4 hover:underline" target="_blank" rel="noopener noreferrer">
+            <a
+              href={site.resume}
+              className="text-accent underline-offset-4 hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Télécharger mon CV
             </a>
             .
           </>
         )}
       </PageHeading>
-      <div className="glass-card max-w-3xl rounded-[28px] p-6 sm:p-8">
-        <Timeline items={experiences} />
-      </div>
+      <GlowPanel className="max-w-3xl">
+        <div className="glass-card rounded-[28px] p-6 sm:p-8">
+          <Timeline items={experiences} />
+        </div>
+      </GlowPanel>
     </>
   );
 }
