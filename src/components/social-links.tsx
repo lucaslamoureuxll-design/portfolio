@@ -25,7 +25,7 @@ export function SocialLinks({ site, showEmail = false, className = "" }: Props) 
             rel="noopener noreferrer"
             aria-label={label}
             title={label}
-            className="flex size-10 items-center justify-center rounded-full border border-border text-muted transition hover:border-foreground hover:text-foreground"
+            className="glass glass-press flex size-10 items-center justify-center rounded-full text-muted hover:text-foreground"
           >
             <Icon className="size-[18px]" />
           </a>

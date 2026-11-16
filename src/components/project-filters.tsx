@@ -24,7 +24,7 @@ export function ProjectFilters({ projects }: { projects: Project[] }) {
 
   return (
     <div>
-      <div role="group" aria-label="Filtrer par technologie" className="-mx-4 mb-8 flex gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:flex-wrap sm:px-0">
+      <div role="group" aria-label="Filtrer par technologie" className="-mx-4 mb-8 flex gap-2 overflow-x-auto px-4 pt-1 pb-3 sm:mx-0 sm:flex-wrap sm:px-0">
         {[ALL, ...technologies].map((tech) => {
           const selected = tech === active;
           return (
@@ -33,10 +33,8 @@ export function ProjectFilters({ projects }: { projects: Project[] }) {
               type="button"
               onClick={() => setActive(tech)}
               aria-pressed={selected}
-              className={`shrink-0 rounded-full border px-3.5 py-1.5 text-sm transition ${
-                selected
-                  ? "border-foreground bg-foreground text-background"
-                  : "border-border text-muted hover:border-foreground/40 hover:text-foreground"
+              className={`glass-press shrink-0 rounded-full px-3.5 py-1.5 text-sm ${
+                selected ? "bg-foreground text-background shadow-md" : "glass text-muted hover:text-foreground"
               }`}
             >
               {tech}

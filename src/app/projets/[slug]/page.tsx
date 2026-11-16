@@ -38,7 +38,10 @@ export default async function ProjectPage({ params }: PageProps<"/projets/[slug]
     <article className="mx-auto max-w-3xl">
       <div aria-hidden="true" className="reading-progress fixed inset-x-0 top-0 z-50 h-0.5 bg-accent" />
 
-      <Link href="/projets" className="mb-10 inline-flex items-center gap-2 text-sm text-muted hover:text-foreground">
+      <Link
+        href="/projets"
+        className="glass glass-press mb-10 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm text-muted hover:text-foreground"
+      >
         <ArrowLeftIcon className="size-4" /> Tous les projets
       </Link>
 
@@ -64,7 +67,7 @@ export default async function ProjectPage({ params }: PageProps<"/projets/[slug]
                 href={project.demo}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition hover:opacity-90"
+                className="glass-press inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background shadow-lg shadow-black/15 hover:opacity-90"
               >
                 Voir le site <ExternalLinkIcon className="size-4" />
               </a>
@@ -74,7 +77,7 @@ export default async function ProjectPage({ params }: PageProps<"/projets/[slug]
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-2.5 text-sm font-medium transition hover:border-foreground"
+                className="glass glass-press inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium"
               >
                 <GitHubIcon className="size-4" /> Code source
               </a>
@@ -83,16 +86,18 @@ export default async function ProjectPage({ params }: PageProps<"/projets/[slug]
         )}
       </header>
 
-      <div className="relative my-10 aspect-[16/9] overflow-hidden rounded-2xl border border-border bg-surface">
+      <div className="glass-card relative my-10 aspect-[16/9] overflow-hidden rounded-[28px]">
         <ProjectCover title={project.title} cover={project.cover} priority />
       </div>
 
-      <Markdown source={project.body} />
+      <div className="glass-card rounded-[28px] p-6 sm:p-10">
+        <Markdown source={project.body} />
+      </div>
 
       {(older || newer) && (
-        <nav aria-label="Autres projets" className="mt-16 grid gap-4 border-t border-border pt-8 sm:grid-cols-2">
+        <nav aria-label="Autres projets" className="mt-10 grid gap-4 sm:grid-cols-2">
           {older ? (
-            <Link href={`/projets/${older.slug}`} className="group rounded-2xl border border-border p-5 transition hover:border-foreground/30">
+            <Link href={`/projets/${older.slug}`} className="glass glass-press group rounded-3xl p-5">
               <span className="flex items-center gap-1.5 text-xs text-muted">
                 <ArrowLeftIcon className="size-3.5 transition group-hover:-translate-x-0.5" /> Projet précédent
               </span>
@@ -104,7 +109,7 @@ export default async function ProjectPage({ params }: PageProps<"/projets/[slug]
           {newer && (
             <Link
               href={`/projets/${newer.slug}`}
-              className="group rounded-2xl border border-border p-5 text-right transition hover:border-foreground/30"
+              className="glass glass-press group rounded-3xl p-5 text-right"
             >
               <span className="flex items-center justify-end gap-1.5 text-xs text-muted">
                 Projet suivant <ArrowRightIcon className="size-3.5 transition group-hover:translate-x-0.5" />

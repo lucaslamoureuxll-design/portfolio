@@ -25,7 +25,7 @@ export function CopyEmailButton({ email }: { email: string }) {
     <button
       type="button"
       onClick={copy}
-      className="group inline-flex max-w-full items-center gap-3 rounded-full border border-border bg-surface py-2 pr-2 pl-4 text-left transition hover:border-foreground/40"
+      className="glass glass-press group inline-flex max-w-full items-center gap-3 rounded-full py-2 pr-2 pl-4 text-left"
     >
       <span className="truncate font-medium">{email}</span>
       <span

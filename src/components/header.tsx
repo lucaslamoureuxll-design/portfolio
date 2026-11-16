@@ -21,7 +21,7 @@ function SearchButton() {
       onClick={() => window.dispatchEvent(new Event(OPEN_PALETTE_EVENT))}
       aria-label="Recherche rapide (Ctrl + K)"
       title="Recherche rapide (Ctrl + K)"
-      className="flex h-9 items-center gap-2 rounded-full px-2.5 text-muted transition hover:bg-foreground/5 hover:text-foreground lg:border lg:border-border lg:pr-2"
+      className="glass-press flex h-9 items-center gap-2 rounded-full px-2.5 text-muted hover:bg-foreground/[0.06] hover:text-foreground"
     >
       <SearchIcon className="size-[18px]" />
       <kbd className="hidden rounded border border-border px-1.5 font-sans text-[11px] lg:inline">⌘K</kbd>
@@ -36,8 +36,8 @@ export function Header({ name }: { name: string }) {
   const isActive = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6">
+    <header className="sticky top-0 z-40 px-3 pt-3 sm:px-6 sm:pt-4">
+      <div className="glass mx-auto flex h-14 max-w-5xl items-center justify-between rounded-full pr-2 pl-5">
         <Link href="/" className="font-semibold tracking-tight" onClick={() => setOpen(false)}>
           {name}
         </Link>
@@ -48,8 +48,10 @@ export function Header({ name }: { name: string }) {
               key={item.href}
               href={item.href}
               aria-current={isActive(item.href) ? "page" : undefined}
-              className={`rounded-full px-3 py-1.5 text-sm transition ${
-                isActive(item.href) ? "bg-foreground/5 text-foreground" : "text-muted hover:text-foreground"
+              className={`glass-press rounded-full px-3.5 py-1.5 text-sm ${
+                isActive(item.href)
+                  ? "bg-white/70 font-medium text-foreground shadow-sm ring-1 ring-black/5 dark:bg-white/15 dark:ring-white/10"
+                  : "text-muted hover:bg-foreground/[0.06] hover:text-foreground"
               }`}
             >
               {item.label}
@@ -69,7 +71,7 @@ export function Header({ name }: { name: string }) {
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-            className="flex size-9 items-center justify-center rounded-full text-muted hover:text-foreground"
+            className="glass-press flex size-9 items-center justify-center rounded-full text-muted hover:bg-foreground/[0.06] hover:text-foreground"
           >
             {open ? <CloseIcon className="size-5" /> : <MenuIcon className="size-5" />}
           </button>
@@ -77,16 +79,16 @@ export function Header({ name }: { name: string }) {
       </div>
 
       {open && (
-        <nav id="mobile-nav" aria-label="Navigation mobile" className="border-t border-border/60 md:hidden">
-          <ul className="mx-auto flex max-w-5xl flex-col px-4 py-2">
+        <nav id="mobile-nav" aria-label="Navigation mobile" className="glass mx-auto mt-2 max-w-5xl rounded-3xl md:hidden">
+          <ul className="flex flex-col p-2">
             {NAV.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   onClick={() => setOpen(false)}
                   aria-current={isActive(item.href) ? "page" : undefined}
-                  className={`block rounded-lg px-3 py-3 ${
-                    isActive(item.href) ? "text-foreground" : "text-muted"
+                  className={`block rounded-2xl px-4 py-3 ${
+                    isActive(item.href) ? "bg-white/60 font-medium text-foreground dark:bg-white/10" : "text-muted"
                   }`}
                 >
                   {item.label}

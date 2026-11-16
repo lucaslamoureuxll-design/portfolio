@@ -26,7 +26,9 @@ export default async function ContactPage() {
         <p className="mt-8 text-sm text-muted">Retrouvez-moi aussi sur :</p>
         <SocialLinks site={site} className="mt-3" />
       </div>
-      <ContactForm email={site.email} />
+      <div className="glass-card self-start rounded-[28px] p-6 sm:p-8">
+        <ContactForm email={site.email} />
+      </div>
     </div>
   );
 }

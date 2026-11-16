@@ -7,7 +7,7 @@ type Status = "idle" | "sending" | "success" | "error";
 const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
 
 const inputClass =
-  "w-full rounded-xl border border-border bg-surface px-4 py-3 text-foreground placeholder:text-muted/70 outline-none transition focus:border-accent focus:ring-4 focus:ring-accent/15";
+  "w-full rounded-2xl border border-black/[0.08] bg-white/60 px-4 py-3 text-foreground placeholder:text-muted/80 outline-none transition focus:border-accent focus:bg-white/80 focus:ring-4 focus:ring-accent/15 dark:border-white/10 dark:bg-white/[0.06] dark:focus:bg-white/10";
 
 /**
  * Formulaire de contact via Web3Forms (gratuit, sans backend).
@@ -18,7 +18,7 @@ export function ContactForm({ email }: { email: string }) {
 
   if (!ACCESS_KEY) {
     return (
-      <div className="rounded-2xl border border-border bg-surface p-6">
+      <div>
         <p className="text-muted">Écrivez-moi directement :</p>
         <a href={`mailto:${email}`} className="mt-2 inline-block text-lg font-medium text-accent underline-offset-4 hover:underline">
           {email}
@@ -76,7 +76,7 @@ export function ContactForm({ email }: { email: string }) {
         <button
           type="submit"
           disabled={status === "sending"}
-          className="inline-flex items-center justify-center rounded-full bg-foreground px-6 py-3 font-medium text-background transition hover:opacity-90 disabled:opacity-60"
+          className="glass-press inline-flex items-center justify-center rounded-full bg-foreground px-6 py-3 font-medium text-background shadow-lg shadow-black/15 hover:opacity-90 disabled:opacity-60"
         >
           {status === "sending" ? "Envoi…" : "Envoyer le message"}
         </button>

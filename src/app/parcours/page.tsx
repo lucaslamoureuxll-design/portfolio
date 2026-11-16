@@ -25,7 +25,7 @@ export default async function ExperiencePage() {
           </>
         )}
       </PageHeading>
-      <div className="max-w-3xl">
+      <div className="glass-card max-w-3xl rounded-[28px] p-6 sm:p-8">
         <Timeline items={experiences} />
       </div>
     </>

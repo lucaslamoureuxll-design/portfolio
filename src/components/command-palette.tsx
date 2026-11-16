@@ -175,14 +175,14 @@ export function CommandPalette({
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center px-4 pt-[12vh]">
-      <div className="palette-backdrop absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setOpen(false)} aria-hidden="true" />
+      <div className="palette-backdrop absolute inset-0 bg-black/25 backdrop-blur-[2px]" onClick={() => setOpen(false)} aria-hidden="true" />
       <div
         role="dialog"
         aria-modal="true"
         aria-label="Recherche rapide"
-        className="palette-panel relative w-full max-w-lg overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl"
+        className="palette-panel glass relative w-full max-w-lg overflow-hidden rounded-[28px] [--glass-blur:40px]"
       >
-        <div className="flex items-center gap-3 border-b border-border px-4">
+        <div className="flex items-center gap-3 border-b border-black/[0.06] px-5 dark:border-white/10">
           <SearchIcon className="size-5 shrink-0 text-muted" />
           <input
             ref={inputRef}
@@ -199,7 +199,7 @@ export function CommandPalette({
             aria-activedescendant={results[active] ? `palette-${results[active].id}` : undefined}
             className="h-14 w-full bg-transparent text-base outline-none placeholder:text-muted"
           />
-          <kbd className="hidden shrink-0 rounded-md border border-border px-1.5 py-0.5 text-xs text-muted sm:block">Échap</kbd>
+          <kbd className="hidden shrink-0 rounded-md border border-black/10 px-1.5 py-0.5 text-xs text-muted sm:block dark:border-white/15">Échap</kbd>
         </div>
 
         <ul ref={listRef} id="palette-results" role="listbox" className="max-h-[50vh] overflow-y-auto p-2">
@@ -217,8 +217,8 @@ export function CommandPalette({
                   data-index={index}
                   onMouseMove={() => setActive(index)}
                   onClick={() => command.run()}
-                  className={`flex cursor-pointer items-center justify-between gap-4 rounded-lg px-3 py-2.5 text-sm ${
-                    index === active ? "bg-foreground/[0.06] text-foreground" : "text-foreground/90"
+                  className={`flex cursor-pointer items-center justify-between gap-4 rounded-2xl px-3 py-2.5 text-sm transition-colors ${
+                    index === active ? "bg-white/70 text-foreground shadow-sm dark:bg-white/[0.12]" : "text-foreground/90"
                   }`}
                 >
                   <span className="truncate">{command.label}</span>
@@ -229,7 +229,7 @@ export function CommandPalette({
           })}
         </ul>
 
-        <div className="flex items-center justify-between border-t border-border px-4 py-2.5 text-xs text-muted">
+        <div className="flex items-center justify-between border-t border-black/[0.06] px-5 py-2.5 text-xs text-muted dark:border-white/10">
           <span aria-live="polite" className={notice ? "font-medium text-emerald-600 dark:text-emerald-400" : ""}>
             {notice || "↑↓ pour naviguer · Entrée pour valider"}
           </span>

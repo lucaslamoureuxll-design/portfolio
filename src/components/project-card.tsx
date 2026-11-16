@@ -5,11 +5,11 @@ import { TechBadge } from "@/components/tech-badge";
 
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="reveal group relative flex flex-col overflow-hidden rounded-2xl border border-border bg-surface transition hover:-translate-y-0.5 hover:border-foreground/20 hover:shadow-lg hover:shadow-black/5">
-      <div className="relative aspect-[16/9] overflow-hidden border-b border-border bg-background">
+    <article className="reveal glass-card group flex flex-col overflow-hidden rounded-[28px] p-2 transition duration-300 hover:-translate-y-1">
+      <div className="relative aspect-[16/9] overflow-hidden rounded-[20px] bg-background/40">
         <ProjectCover title={project.title} cover={project.cover} />
       </div>
-      <div className="flex flex-1 flex-col p-5">
+      <div className="flex flex-1 flex-col px-4 pt-4 pb-3">
         <h3 className="text-lg font-semibold tracking-tight">
           <Link href={`/projets/${project.slug}`} className="after:absolute after:inset-0">
             {project.title}

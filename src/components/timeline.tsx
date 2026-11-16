@@ -10,8 +10,8 @@ export function Timeline({ items }: { items: Experience[] }) {
         <li key={item.slug} className="reveal relative pb-10 pl-6 last:pb-0 sm:pl-8">
           <span
             aria-hidden="true"
-            className={`absolute top-1.5 -left-[5px] size-[9px] rounded-full ring-4 ring-background ${
-              item.current ? "bg-accent" : "bg-border"
+            className={`absolute top-1.5 -left-[5px] size-[9px] rounded-full ring-4 ring-white/70 dark:ring-white/10 ${
+              item.current ? "bg-accent shadow-[0_0_12px_var(--accent)]" : "bg-muted/40"
             }`}
           />
           <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
