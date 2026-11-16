@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { CommandPalette } from "@/components/command-palette";
 import { Footer } from "@/components/footer";
+import { GlassPointer } from "@/components/glass-pointer";
 import { Header } from "@/components/header";
 import { ThemeProvider } from "@/components/theme-provider";
-import { getSiteSettings } from "@/lib/content";
+import { getProjects, getSiteSettings } from "@/lib/content";
 import { getSiteUrl } from "@/lib/site-url";
 import "./globals.css";
 
@@ -35,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {
-  const site = await getSiteSettings();
+  const [site, projects] = await Promise.all([getSiteSettings(), getProjects()]);
 
   return (
     <html
@@ -45,6 +47,12 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full flex-col font-sans">
         <ThemeProvider>
+          <div className="ambient" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
+          <GlassPointer />
           <a
             href="#contenu"
             className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-foreground focus:px-4 focus:py-2 focus:text-background"
@@ -52,10 +60,15 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             Aller au contenu
           </a>
           <Header name={site.name} />
-          <main id="contenu" className="mx-auto w-full max-w-5xl flex-1 px-4 pt-12 sm:px-6 sm:pt-20">
+          <main id="contenu" className="mx-auto w-full max-w-5xl flex-1 px-4 pt-10 sm:px-6 sm:pt-16">
             {children}
           </main>
           <Footer site={site} />
+          <CommandPalette
+            projects={projects.map(({ slug, title, technologies }) => ({ slug, title, technologies }))}
+            email={site.email}
+            linkedin={site.socials.linkedin || undefined}
+          />
         </ThemeProvider>
       </body>
     </html>

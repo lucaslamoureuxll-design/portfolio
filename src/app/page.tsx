@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRightIcon } from "@/components/icons";
 import { ProjectCard } from "@/components/project-card";
 import { SocialLinks } from "@/components/social-links";
+import { TechBadge } from "@/components/tech-badge";
 import { Timeline } from "@/components/timeline";
 import { getExperiences, getProjects, getSiteSettings } from "@/lib/content";
 
@@ -16,12 +17,12 @@ export default async function HomePage() {
       <section className="flex flex-col-reverse gap-10 pb-20 sm:pb-28 md:flex-row md:items-center md:justify-between">
         <div className="max-w-2xl">
           {site.available && (
-            <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-sm text-muted">
+            <p className="glass mb-6 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm text-muted">
               <span className="relative flex size-2">
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500 opacity-60" />
                 <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
               </span>
-              Disponible pour de nouveaux projets
+              {site.availabilityLabel || "Disponible pour de nouveaux projets"}
             </p>
           )}
           <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
@@ -35,27 +36,50 @@ export default async function HomePage() {
             <div className="flex flex-wrap gap-3">
               <Link
                 href="/projets"
-                className="inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 font-medium text-background transition hover:opacity-90"
+                className="glass-press inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 font-medium text-background shadow-lg shadow-black/15 hover:opacity-90"
               >
                 Voir mes projets <ArrowRightIcon className="size-4" />
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex items-center rounded-full border border-border px-5 py-2.5 font-medium transition hover:border-foreground"
+                className="glass glass-press inline-flex items-center rounded-full px-5 py-2.5 font-medium"
               >
                 Me contacter
               </Link>
             </div>
-            <SocialLinks site={site} className="sm:ml-2" />
+            <SocialLinks site={site} showEmail className="sm:ml-2" />
           </div>
         </div>
 
         {site.avatar && (
-          <div className="relative size-32 shrink-0 overflow-hidden rounded-full border border-border sm:size-44">
+          <div className="glass relative size-32 shrink-0 overflow-hidden rounded-full p-1.5 sm:size-44">
             <Image src={site.avatar} alt={site.name} fill priority sizes="176px" className="object-cover" />
           </div>
         )}
       </section>
+
+      {/* Compétences */}
+      {site.skills && site.skills.length > 0 && (
+        <section aria-labelledby="competences-titre" className="pb-20 sm:pb-28">
+          <h2 id="competences-titre" className="mb-8 text-2xl font-semibold tracking-tight">
+            Compétences
+          </h2>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {site.skills.map((group) => (
+              <div key={group.category} className="reveal glass-card rounded-[28px] p-5">
+                <h3 className="text-sm font-medium text-accent">{group.category}</h3>
+                <ul className="mt-3 flex flex-wrap gap-1.5">
+                  {group.items.map((skill) => (
+                    <li key={skill}>
+                      <TechBadge>{skill}</TechBadge>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Projets mis en avant */}
       <section aria-labelledby="projets-titre" className="pb-20 sm:pb-28">
@@ -63,7 +87,7 @@ export default async function HomePage() {
           <h2 id="projets-titre" className="text-2xl font-semibold tracking-tight">
             Projets sélectionnés
           </h2>
-          <Link href="/projets" className="inline-flex items-center gap-1 text-sm text-muted hover:text-foreground">
+          <Link href="/projets" className="glass glass-press inline-flex items-center gap-1 rounded-full px-3.5 py-1.5 text-sm text-muted hover:text-foreground">
             Tous les projets <ArrowRightIcon className="size-4" />
           </Link>
         </div>
@@ -81,11 +105,13 @@ export default async function HomePage() {
             <h2 id="parcours-titre" className="text-2xl font-semibold tracking-tight">
               Parcours
             </h2>
-            <Link href="/parcours" className="inline-flex items-center gap-1 text-sm text-muted hover:text-foreground">
+            <Link href="/parcours" className="glass glass-press inline-flex items-center gap-1 rounded-full px-3.5 py-1.5 text-sm text-muted hover:text-foreground">
               Tout le parcours <ArrowRightIcon className="size-4" />
             </Link>
           </div>
-          <Timeline items={experiences.slice(0, 3)} />
+          <div className="glass-card rounded-[28px] p-6 sm:p-8">
+            <Timeline items={experiences.slice(0, 3)} />
+          </div>
         </section>
       )}
     </>

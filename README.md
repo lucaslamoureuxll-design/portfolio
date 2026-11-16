@@ -8,6 +8,15 @@ Portfolio moderne, épuré et responsive, dont **tout le contenu est stocké dan
 - **Contact** (`/contact`) : formulaire fonctionnel via [Web3Forms](https://web3forms.com) (gratuit), ou lien e-mail.
 - Thème clair / sombre, SEO (métadonnées, `sitemap.xml`, `robots.txt`), pages pré-rendues en HTML statique.
 
+**Fonctionnalités bonus**
+
+- **Recherche rapide** : `Ctrl + K` / `⌘K` (ou `/`) ouvre une palette pour aller sur une page ou un projet, rechercher une technologie, copier l'e-mail, ouvrir LinkedIn ou changer de thème.
+- **Section Compétences** sur l'accueil, éditable dans le CMS.
+- **Bouton « Copier l'e-mail »** sur la page Contact.
+- **Images de partage générées automatiquement** (aperçu LinkedIn, X, WhatsApp…) pour le site et pour chaque projet.
+- Fiches projet : **barre de progression de lecture**, temps de lecture estimé, navigation projet précédent / suivant.
+- **Animations d'apparition au défilement** en CSS pur, désactivées si l'utilisateur préfère réduire les animations.
+
 ## Sommaire
 
 1. [Lancer le projet en local](#1-lancer-le-projet-en-local)
@@ -111,24 +120,27 @@ Texte libre en **Markdown** : titres, listes, liens, images, tableaux, code…
 
 Les **filtres par technologie** sont générés automatiquement à partir du champ `technologies` de tous les projets. Les projets sont triés par date décroissante.
 
-**Ajouter une expérience** : créez `content/experiences/2025-entreprise.md` :
+**Ajouter une étape au parcours** : créez `content/experiences/2027-stage.md` :
 
 ```md
 ---
 kind: work            # work = expérience, education = formation
-role: Développeur Front-End
-organization: Entreprise
-location: Paris
-start: 2025-01        # format AAAA-MM
-end: ""               # vide = « aujourd'hui »
+role: Stage développeur web
+organization: Entreprise   # facultatif
+location: Paris            # facultatif
+start: "2027-04"      # "AAAA" ou "AAAA-MM"
+end: "2027-06"        # vide = « aujourd'hui » ; égal à start = une seule date (ex. un diplôme)
+current: false        # true = badge « En cours »
 technologies:
   - React
 ---
 
-Description courte de vos missions (Markdown).
+Description courte (Markdown, facultatif).
 ```
 
-**Textes généraux** : éditez `content/settings/site.json`. Laissez un réseau social vide (`""`) pour masquer son icône.
+La timeline est triée automatiquement du plus récent au plus ancien.
+
+**Textes généraux** : éditez `content/settings/site.json` (présentation, e-mail, réseaux sociaux, compétences, texte du badge de disponibilité). Laissez un réseau social vide (`""`) pour masquer son icône.
 
 **Images** : placez-les dans `public/images/uploads/` et référencez-les avec `/images/uploads/nom.png`.
 
