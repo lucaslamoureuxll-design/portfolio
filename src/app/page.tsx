@@ -52,8 +52,17 @@ export default async function HomePage() {
         </div>
 
         {site.avatar && (
-          <div className="glass relative size-32 shrink-0 overflow-hidden rounded-full p-1.5 sm:size-44">
-            <Image src={site.avatar} alt={site.name} fill priority sizes="176px" className="object-cover" />
+          <div className="glass shrink-0 self-start rounded-full p-2 md:self-center">
+            <div className="relative size-36 overflow-hidden rounded-full sm:size-48 lg:size-60">
+              <Image
+                src={site.avatar}
+                alt={`Photo de ${site.name}`}
+                fill
+                priority
+                sizes="(min-width: 1024px) 240px, (min-width: 640px) 192px, 144px"
+                className="object-cover"
+              />
+            </div>
           </div>
         )}
       </section>
