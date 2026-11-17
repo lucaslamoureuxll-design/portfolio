@@ -10,7 +10,16 @@ import { ArrowLeftIcon, ArrowRightIcon, CloseIcon, ExpandIcon } from "@/componen
  * glissement au doigt et affichage plein écran.
  * Les images remplissent le cadre (object-cover) : aucune bande blanche.
  */
-export function ProjectGallery({ images, title }: { images: GalleryImage[]; title: string }) {
+export function ProjectGallery({
+  images,
+  title,
+  ratio = "1736/986",
+}: {
+  images: GalleryImage[];
+  title: string;
+  /** Rapport largeur/hauteur des images, pour qu'elles remplissent le cadre sans être coupées. */
+  ratio?: string;
+}) {
   const rootRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const thumbsRef = useRef<HTMLDivElement>(null);
@@ -18,6 +27,8 @@ export function ProjectGallery({ images, title }: { images: GalleryImage[]; titl
   const [fullscreen, setFullscreen] = useState(false);
   const [canFullscreen, setCanFullscreen] = useState(false);
   const count = images.length;
+  const [w, h] = ratio.split("/").map(Number);
+  const portrait = h > w;
 
   const goTo = useCallback(
     (target: number, behavior: ScrollBehavior = "smooth") => {
@@ -97,8 +108,11 @@ export function ProjectGallery({ images, title }: { images: GalleryImage[]; titl
       className={fullscreen ? "flex h-full flex-col bg-black p-3 sm:p-6" : ""}
     >
       <div
+        style={fullscreen ? undefined : { aspectRatio: ratio }}
         className={`relative overflow-hidden ${
-          fullscreen ? "min-h-0 flex-1 rounded-xl" : "aspect-[1736/986] rounded-[22px] bg-background/40"
+          fullscreen
+            ? "min-h-0 flex-1 rounded-xl"
+            : `rounded-[22px] bg-background/40 ${portrait ? "mx-auto w-full max-w-[440px]" : ""}`
         }`}
       >
         <div
@@ -118,7 +132,7 @@ export function ProjectGallery({ images, title }: { images: GalleryImage[]; titl
                 alt={image.caption ? `${title} — ${image.caption}` : `${title} — image ${i + 1}`}
                 fill
                 priority={i === 0}
-                sizes={fullscreen ? "100vw" : "(min-width: 768px) 752px, 100vw"}
+                sizes={fullscreen ? "100vw" : portrait ? "440px" : "(min-width: 768px) 752px, 100vw"}
                 className={fullscreen ? "object-contain" : "object-cover"}
               />
             </figure>
@@ -164,7 +178,7 @@ export function ProjectGallery({ images, title }: { images: GalleryImage[]; titl
         </div>
       </div>
 
-      <div className="flex items-center justify-between gap-4 px-2 pt-3">
+      <div className={`flex items-center gap-4 px-2 pt-3 ${portrait ? "justify-center" : "justify-between"}`}>
         <p aria-live="polite" className={`text-sm font-medium ${fullscreen ? "text-white" : ""}`}>
           {images[index]?.caption ?? `Image ${index + 1}`}
         </p>
@@ -173,7 +187,9 @@ export function ProjectGallery({ images, title }: { images: GalleryImage[]; titl
       {count > 1 && (
         <div
           ref={thumbsRef}
-          className="flex gap-2 overflow-x-auto px-2 pt-3 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className={`flex gap-2 overflow-x-auto px-2 pt-3 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
+            portrait ? "justify-center" : ""
+          }`}
         >
           {images.map((image, i) => (
             <button
@@ -183,7 +199,8 @@ export function ProjectGallery({ images, title }: { images: GalleryImage[]; titl
               onClick={() => goTo(i)}
               aria-label={`Afficher l'image ${i + 1}${image.caption ? ` : ${image.caption}` : ""}`}
               aria-current={i === index ? "true" : undefined}
-              className={`relative aspect-[1736/986] w-24 shrink-0 overflow-hidden rounded-xl transition sm:w-28 ${
+              style={{ aspectRatio: ratio }}
+              className={`relative shrink-0 overflow-hidden rounded-xl transition ${portrait ? "w-14 sm:w-16" : "w-24 sm:w-28"} ${
                 i === index
                   ? "opacity-100 ring-2 ring-accent ring-offset-2 ring-offset-transparent"
                   : "opacity-60 hover:opacity-100"

@@ -93,7 +93,7 @@ export default async function ProjectPage({ params }: PageProps<"/projets/[slug]
       <GlowPanel className="my-10">
         {project.gallery.length > 0 ? (
           <div className="glass-card rounded-[28px] p-2">
-            <ProjectGallery images={project.gallery} title={project.title} />
+            <ProjectGallery images={project.gallery} title={project.title} ratio={project.galleryRatio} />
           </div>
         ) : (
           <div className="glass-card relative aspect-[16/9] overflow-hidden rounded-[28px]">
