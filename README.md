@@ -84,7 +84,7 @@ npm run cms    # terminal 2
 
 Ouvrez <http://localhost:3000/admin>. Les modifications sont écrites directement dans `/content` : il suffit ensuite de faire un commit et un push.
 
-**En ligne** (`https://votre-site.vercel.app/admin`) : connectez-vous avec GitHub. Chaque enregistrement crée un commit sur le dépôt, et Vercel redéploie le site automatiquement en environ une minute. Configuration : voir la [section 6](#6-activer-le-cms-en-ligne-decap--github).
+**En ligne** (`https://www.lamoureux-lucas.com/admin`) : connectez-vous avec GitHub. Chaque enregistrement crée un commit sur le dépôt, et Vercel redéploie le site automatiquement en environ une minute. Configuration : voir la [section 6](#6-activer-le-cms-en-ligne-decap--github).
 
 Le CMS propose trois sections :
 
@@ -173,10 +173,9 @@ Le plan **Hobby** de Vercel est gratuit et suffit largement pour un portfolio.
    | Nom                         | Valeur                            |
    | --------------------------- | --------------------------------- |
    | `NEXT_PUBLIC_WEB3FORMS_KEY` | votre clé Web3Forms               |
-   | `NEXT_PUBLIC_SITE_URL`      | `https://votre-projet.vercel.app` |
 6. Cliquez sur **Deploy**. Après environ une minute, votre site est en ligne sur `https://<projet>.vercel.app`. 🎉
 7. **Mises à jour** : chaque push sur `main` (ou chaque enregistrement dans le CMS) redéploie automatiquement le site. Chaque Pull Request obtient aussi une URL de prévisualisation.
-8. **Nom de domaine personnalisé** (facultatif) : *Project → Settings → Domains → Add*, puis suivez les instructions DNS. Pensez à mettre à jour `NEXT_PUBLIC_SITE_URL`.
+8. **Nom de domaine personnalisé** (facultatif) : *Project → Settings → Domains → Add*, puis suivez les instructions DNS. Le site utilise actuellement **https://www.lamoureux-lucas.com** : en cas de changement, mettez à jour `PRODUCTION_URL` dans `src/lib/site-url.ts`.
 
 > Après avoir modifié une variable d'environnement, relancez un déploiement (*Deployments → ⋯ → Redeploy*).
 
@@ -197,15 +196,15 @@ Pour utiliser `/admin` sur le site déployé, le CMS doit pouvoir écrire dans v
    ```
 2. Sur GitHub : **Settings → Developer settings → OAuth Apps → New OAuth App** ([lien direct](https://github.com/settings/applications/new)) :
    - *Application name* : `Portfolio CMS`
-   - *Homepage URL* : `https://votre-projet.vercel.app`
-   - *Authorization callback URL* : `https://votre-projet.vercel.app/api/callback`
+   - *Homepage URL* : `https://www.lamoureux-lucas.com`
+   - *Authorization callback URL* : `https://www.lamoureux-lucas.com/api/callback`
 3. Cliquez sur **Register application**, puis **Generate a new client secret**.
 4. Dans Vercel (*Project → Settings → Environment Variables*), ajoutez :
    | Nom                          | Valeur             |
    | ---------------------------- | ------------------ |
    | `GITHUB_OAUTH_CLIENT_ID`     | le *Client ID*     |
    | `GITHUB_OAUTH_CLIENT_SECRET` | le *Client secret* |
-5. Redéployez, ouvrez `https://votre-projet.vercel.app/admin` et cliquez sur **Login with GitHub**.
+5. Redéployez, ouvrez `https://www.lamoureux-lucas.com/admin` et cliquez sur **Login with GitHub**.
 
 Seules les personnes ayant un accès en écriture au dépôt GitHub peuvent modifier le contenu.
 
