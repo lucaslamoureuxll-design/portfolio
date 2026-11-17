@@ -5,7 +5,6 @@ import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "re
 import type { Project } from "@/lib/content";
 import { formatMonth } from "@/lib/format";
 import { ArrowLeftIcon, ArrowRightIcon, ExternalLinkIcon } from "@/components/icons";
-import { GlowPanel } from "@/components/glow-panel";
 import { ProjectCover } from "@/components/project-cover";
 import { TechBadge } from "@/components/tech-badge";
 
@@ -75,49 +74,45 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
             inert={i !== index}
             className="w-full shrink-0 snap-center px-1 py-4"
           >
-            <GlowPanel radius={35}>
-              <article className="glass-card grid overflow-hidden rounded-[32px] p-2 md:grid-cols-[1.25fr_1fr]">
-                <div className="relative aspect-[16/10] overflow-hidden rounded-[26px] bg-background/40 md:aspect-auto md:min-h-[380px]">
-                  <ProjectCover title={project.title} cover={project.cover} priority={i === 0} />
-                </div>
+            <article className="glass-card grid overflow-hidden rounded-[32px] p-2 md:grid-cols-[1.25fr_1fr]">
+              <div className="relative aspect-[16/10] overflow-hidden rounded-[26px] bg-background/40 md:aspect-auto md:min-h-[380px]">
+                <ProjectCover title={project.title} cover={project.cover} priority={i === 0} />
+              </div>
 
-                <div className="flex flex-col p-5 sm:p-8">
-                  <p className="text-sm text-muted tabular-nums">
-                    <span className="font-medium text-accent">{String(i + 1).padStart(2, "0")}</span> /{" "}
-                    {String(count).padStart(2, "0")} · {formatMonth(project.date)}
-                  </p>
-                  <h3 className="mt-3 text-2xl font-semibold tracking-tight text-balance sm:text-3xl">
-                    {project.title}
-                  </h3>
-                  <p className="mt-3 text-muted text-pretty">{project.summary}</p>
-                  <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Technologies">
-                    {project.technologies.map((tech) => (
-                      <li key={tech}>
-                        <TechBadge>{tech}</TechBadge>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-auto flex flex-wrap gap-3 pt-8">
-                    <Link
-                      href={`/projets/${project.slug}`}
-                      className="glass-press inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background shadow-lg shadow-black/15 hover:opacity-90"
+              <div className="flex flex-col p-5 sm:p-8">
+                <p className="text-sm text-muted tabular-nums">
+                  <span className="font-medium text-accent">{String(i + 1).padStart(2, "0")}</span> /{" "}
+                  {String(count).padStart(2, "0")} · {formatMonth(project.date)}
+                </p>
+                <h3 className="mt-3 text-2xl font-semibold tracking-tight text-balance sm:text-3xl">{project.title}</h3>
+                <p className="mt-3 text-muted text-pretty">{project.summary}</p>
+                <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Technologies">
+                  {project.technologies.map((tech) => (
+                    <li key={tech}>
+                      <TechBadge>{tech}</TechBadge>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-auto flex flex-wrap gap-3 pt-8">
+                  <Link
+                    href={`/projets/${project.slug}`}
+                    className="glass-press inline-flex items-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background shadow-lg shadow-black/15 hover:opacity-90"
+                  >
+                    Voir le projet <ArrowRightIcon className="size-4" />
+                  </Link>
+                  {project.demo && (
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="glass glass-press inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium"
                     >
-                      Voir le projet <ArrowRightIcon className="size-4" />
-                    </Link>
-                    {project.demo && (
-                      <a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="glass glass-press inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium"
-                      >
-                        Démo <ExternalLinkIcon className="size-4" />
-                      </a>
-                    )}
-                  </div>
+                      Démo <ExternalLinkIcon className="size-4" />
+                    </a>
+                  )}
                 </div>
-              </article>
-            </GlowPanel>
+              </div>
+            </article>
           </div>
         ))}
       </div>

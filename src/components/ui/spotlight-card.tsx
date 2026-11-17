@@ -29,6 +29,66 @@ const sizeMap = {
   lg: "w-80 h-96",
 };
 
+// ─── Suivi du pointeur partagé ────────────────────────────────────────────────
+// Un seul écouteur pour toutes les cartes, et seules les cartes visibles sont mises à jour
+// (au plus une fois par image) : la lueur ne coûte rien quand la souris ne bouge pas.
+
+const visibleCards = new Set<HTMLElement>();
+let observer: IntersectionObserver | null = null;
+let listening = 0;
+let frame = 0;
+let pointer = { x: 0, y: 0 };
+
+function paint() {
+  frame = 0;
+  const xp = (pointer.x / window.innerWidth).toFixed(2);
+  const yp = (pointer.y / window.innerHeight).toFixed(2);
+  // Coordonnées relatives à chaque carte : pas besoin de `background-attachment: fixed`,
+  // qui forcerait à redessiner les cartes à chaque pixel de défilement.
+  for (const card of visibleCards) {
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty("--x", (pointer.x - rect.left).toFixed(2));
+    card.style.setProperty("--xp", xp);
+    card.style.setProperty("--y", (pointer.y - rect.top).toFixed(2));
+    card.style.setProperty("--yp", yp);
+  }
+}
+
+function schedule() {
+  if (!frame && visibleCards.size > 0) frame = requestAnimationFrame(paint);
+}
+
+function onPointerMove(e: PointerEvent) {
+  pointer = { x: e.clientX, y: e.clientY };
+  schedule();
+}
+
+function track(card: HTMLElement) {
+  observer ??= new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      const el = entry.target as HTMLElement;
+      if (entry.isIntersecting) visibleCards.add(el);
+      else visibleCards.delete(el);
+    }
+  });
+  observer.observe(card);
+  if (listening++ === 0) {
+    document.addEventListener("pointermove", onPointerMove, { passive: true });
+    // Les cartes bougent sous le curseur pendant le défilement.
+    window.addEventListener("scroll", schedule, { passive: true });
+  }
+  return () => {
+    observer?.unobserve(card);
+    visibleCards.delete(card);
+    if (--listening === 0) {
+      document.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("scroll", schedule);
+      cancelAnimationFrame(frame);
+      frame = 0;
+    }
+  };
+}
+
 /**
  * Carte à lueur « projecteur » : un halo coloré suit le pointeur sur la bordure et le fond.
  * Les styles des pseudo-éléments [data-glow] sont dans globals.css (chargés une seule fois).
@@ -46,18 +106,9 @@ const GlowCard = ({
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const syncPointer = (e: PointerEvent) => {
-      const { clientX: x, clientY: y } = e;
-      const card = cardRef.current;
-      if (!card) return;
-      card.style.setProperty("--x", x.toFixed(2));
-      card.style.setProperty("--xp", (x / window.innerWidth).toFixed(2));
-      card.style.setProperty("--y", y.toFixed(2));
-      card.style.setProperty("--yp", (y / window.innerHeight).toFixed(2));
-    };
-
-    document.addEventListener("pointermove", syncPointer, { passive: true });
-    return () => document.removeEventListener("pointermove", syncPointer);
+    // Pas de souris (tactile) : la lueur ne suivrait rien, on n'écoute pas.
+    if (!cardRef.current || !window.matchMedia("(hover: hover)").matches) return;
+    return track(cardRef.current);
   }, []);
 
   const { base, spread } = glowColorMap[glowColor];
@@ -83,7 +134,6 @@ const GlowCard = ({
     backgroundColor: "var(--backdrop, transparent)",
     backgroundSize: "calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)))",
     backgroundPosition: "50% 50%",
-    backgroundAttachment: "fixed",
     border: "var(--border-size) solid var(--backup-border)",
     borderRadius: `${radius}px`,
     position: "relative",
@@ -102,7 +152,6 @@ const GlowCard = ({
         className,
       )}
     >
-      <div data-glow aria-hidden="true" />
       {children}
     </div>
   );
