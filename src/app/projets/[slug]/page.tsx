@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeftIcon, ArrowRightIcon, ExternalLinkIcon, GitHubIcon } from "@/components/icons";
 import { GlowPanel } from "@/components/glow-panel";
 import { Markdown } from "@/components/markdown";
+import { ProjectGallery } from "@/components/project-gallery";
 import { ProjectCover } from "@/components/project-cover";
 import { TechBadge } from "@/components/tech-badge";
 import { getProject, getProjects } from "@/lib/content";
@@ -89,9 +90,15 @@ export default async function ProjectPage({ params }: PageProps<"/projets/[slug]
       </header>
 
       <GlowPanel className="my-10">
-        <div className="glass-card relative aspect-[16/9] overflow-hidden rounded-[28px]">
-          <ProjectCover title={project.title} cover={project.cover} priority />
-        </div>
+        {project.gallery.length > 0 ? (
+          <div className="glass-card rounded-[28px] p-2">
+            <ProjectGallery images={project.gallery} title={project.title} />
+          </div>
+        ) : (
+          <div className="glass-card relative aspect-[16/9] overflow-hidden rounded-[28px]">
+            <ProjectCover title={project.title} cover={project.cover} priority />
+          </div>
+        )}
       </GlowPanel>
 
       <GlowPanel>

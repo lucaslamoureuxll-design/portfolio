@@ -44,12 +44,18 @@ export type Project = {
   date: string;
   technologies: string[];
   cover?: string;
+  /** Images de la fiche projet, affichées dans un diaporama. */
+  gallery: GalleryImage[];
   github?: string;
   demo?: string;
   featured: boolean;
+  /** Position dans les listes (1 = en premier). Les projets sans ordre suivent, du plus récent au plus ancien. */
+  order?: number;
   draft: boolean;
   body: string;
 };
+
+export type GalleryImage = { src: string; caption?: string };
 
 export type Experience = {
   slug: string;
@@ -85,6 +91,18 @@ function toDateString(value: unknown): string {
   return value ? String(value) : "";
 }
 
+/** Accepte une liste de chemins ou d'objets { src, caption } (format du CMS). */
+function toGallery(value: unknown): GalleryImage[] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((item) =>
+      typeof item === "string"
+        ? { src: item }
+        : { src: String(item?.src ?? ""), caption: item?.caption ? String(item.caption) : undefined },
+    )
+    .filter((image) => image.src);
+}
+
 function toStringList(value: unknown): string[] {
   if (!Array.isArray(value)) return [];
   return value.map((v) => String(v).trim()).filter(Boolean);
@@ -106,14 +124,16 @@ export async function getProjects(): Promise<Project[]> {
       date: toDateString(data.date),
       technologies: toStringList(data.technologies),
       cover: data.cover || undefined,
+      gallery: toGallery(data.gallery),
       github: data.github || undefined,
       demo: data.demo || undefined,
       featured: Boolean(data.featured),
+      order: typeof data.order === "number" ? data.order : undefined,
       draft: Boolean(data.draft),
       body,
     }))
     .filter((project) => !project.draft)
-    .sort((a, b) => b.date.localeCompare(a.date));
+    .sort((a, b) => (a.order ?? Infinity) - (b.order ?? Infinity) || b.date.localeCompare(a.date));
 }
 
 export async function getProject(slug: string): Promise<Project | undefined> {

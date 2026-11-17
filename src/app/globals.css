@@ -212,6 +212,9 @@ body {
 .prose-content > * + * {
   margin-top: 1.25em;
 }
+.prose-content > :first-child {
+  margin-top: 0;
+}
 .prose-content h2 {
   margin-top: 2em;
   font-size: 1.375rem;
