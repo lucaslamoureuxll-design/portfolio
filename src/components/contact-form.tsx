@@ -4,19 +4,20 @@ import { useState, type FormEvent } from "react";
 
 type Status = "idle" | "sending" | "success" | "error";
 
-const ACCESS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY;
-
 const inputClass =
   "w-full rounded-2xl border border-black/[0.08] bg-white/60 px-4 py-3 text-foreground placeholder:text-muted/80 outline-none transition focus:border-accent focus:bg-white/80 focus:ring-4 focus:ring-accent/15 dark:border-white/10 dark:bg-white/[0.06] dark:focus:bg-white/10";
 
 /**
  * Formulaire de contact via Web3Forms (gratuit, sans backend).
- * Définissez NEXT_PUBLIC_WEB3FORMS_KEY ; sans clé, un lien mailto est proposé à la place.
+ * La clé vient des réglages du site (web3formsKey) ou de NEXT_PUBLIC_WEB3FORMS_KEY ;
+ * sans clé, un lien mailto est proposé à la place.
  */
-export function ContactForm({ email }: { email: string }) {
+export function ContactForm({ email, accessKey }: { email: string; accessKey?: string }) {
+  // La variable d'environnement, si elle est définie, remplace la clé des réglages du site.
+  const key = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || accessKey;
   const [status, setStatus] = useState<Status>("idle");
 
-  if (!ACCESS_KEY) {
+  if (!key) {
     return (
       <div>
         <p className="text-muted">Écrivez-moi directement :</p>
@@ -39,7 +40,7 @@ export function ContactForm({ email }: { email: string }) {
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           ...data,
-          access_key: ACCESS_KEY,
+          access_key: key,
           subject: `Nouveau message de ${data.name} via le portfolio`,
         }),
       });

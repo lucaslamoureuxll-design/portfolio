@@ -42,6 +42,7 @@ collections:
           - { name: available, label: "Afficher le badge « Disponible »", widget: boolean, default: true }
           - { name: availabilityLabel, label: Texte du badge, widget: string, required: false, default: "Ouvert aux opportunités de stage" }
           - { name: email, label: E-mail de contact, widget: string }
+          - { name: web3formsKey, label: "Clé Web3Forms (formulaire de contact)", widget: string, required: false, hint: "Clé gratuite sur web3forms.com. Vide = l'adresse e-mail s'affiche à la place du formulaire." }
           - { name: avatar, label: Photo de profil, widget: image, required: false }
           - { name: resume, label: CV (PDF), widget: file, required: false }
           - name: socials
