@@ -30,7 +30,7 @@ export default async function ContactPage() {
       </div>
       <GlowPanel className="self-start">
         <div className="glass-card rounded-[28px] p-6 sm:p-8">
-          <ContactForm email={site.email} />
+          <ContactForm email={site.email} accessKey={site.web3formsKey} />
         </div>
       </GlowPanel>
     </div>

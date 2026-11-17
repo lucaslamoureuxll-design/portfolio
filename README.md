@@ -148,14 +148,15 @@ La timeline est triée automatiquement du plus récent au plus ancien.
 
 ## 4. Configurer le formulaire de contact
 
-1. Rendez-vous sur <https://web3forms.com>, saisissez votre e-mail et récupérez votre **Access Key** (gratuit).
-2. Ajoutez-la dans `.env.local` (en local) et dans les variables d'environnement Vercel (en ligne) :
-   ```
-   NEXT_PUBLIC_WEB3FORMS_KEY=votre-cle
-   ```
-3. Les messages arrivent directement dans votre boîte mail.
+Le formulaire envoie les messages dans votre boîte mail via [Web3Forms](https://web3forms.com) (gratuit, sans serveur).
 
-Sans clé, la page Contact affiche simplement votre adresse e-mail (lien `mailto:`).
+1. Sur <https://web3forms.com>, saisissez votre e-mail et récupérez votre **Access Key**.
+2. Collez-la dans `/admin` → **Réglages → Clé Web3Forms**, ou dans `content/settings/site.json` (champ `web3formsKey`).
+   Cette clé est publique par conception : elle permet seulement d'envoyer des messages vers votre adresse.
+3. Les messages arrivent directement dans votre boîte mail (pensez à vérifier les spams la première fois).
+
+Sans clé, la page Contact affiche simplement votre adresse e-mail. La variable d'environnement
+`NEXT_PUBLIC_WEB3FORMS_KEY`, si elle est définie (ex. dans Vercel), remplace la clé des réglages.
 
 > Vous préférez Formspree ? Remplacez l'URL `https://api.web3forms.com/submit` dans `src/components/contact-form.tsx` par l'URL de votre formulaire Formspree.
 

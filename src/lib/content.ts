@@ -30,6 +30,8 @@ export type SiteSettings = {
   available?: boolean;
   availabilityLabel?: string;
   email: string;
+  /** Clé publique Web3Forms du formulaire de contact (conçue pour être visible dans le site). */
+  web3formsKey?: string;
   avatar?: string;
   resume?: string;
   socials: SocialLinks;
