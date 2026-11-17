@@ -72,7 +72,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
           >
             Aller au contenu
           </a>
-          <Header name={site.name} />
+          <Header name={site.headerLabel || site.name} />
           <main id="contenu" className="mx-auto w-full max-w-5xl flex-1 px-4 pt-10 sm:px-6 sm:pt-16">
             {children}
           </main>
