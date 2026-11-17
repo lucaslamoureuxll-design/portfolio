@@ -21,6 +21,8 @@ export type SocialLinks = {
 
 export type SiteSettings = {
   name: string;
+  /** Texte affiché en haut à gauche de la barre de navigation. */
+  headerLabel?: string;
   role: string;
   tagline: string;
   intro: string;

@@ -34,6 +34,7 @@ collections:
         file: content/settings/site.json
         fields:
           - { name: name, label: Nom, widget: string }
+          - { name: headerLabel, label: Texte de la barre de navigation, widget: string, required: false }
           - { name: role, label: Titre / Métier, widget: string }
           - { name: tagline, label: Accroche, widget: string }
           - { name: intro, label: Présentation, widget: text }

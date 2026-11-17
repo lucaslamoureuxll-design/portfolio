@@ -38,7 +38,11 @@ export function Header({ name }: { name: string }) {
   return (
     <header className="sticky top-0 z-40 px-3 pt-3 sm:px-6 sm:pt-4">
       <div className="glass mx-auto flex h-14 max-w-5xl items-center justify-between rounded-full pr-2 pl-5">
-        <Link href="/" className="font-semibold tracking-tight" onClick={() => setOpen(false)}>
+        <Link
+          href="/"
+          className="min-w-0 truncate pr-2 text-sm font-semibold tracking-tight sm:text-base"
+          onClick={() => setOpen(false)}
+        >
           {name}
         </Link>
 
