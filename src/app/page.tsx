@@ -11,7 +11,7 @@ import { getExperiences, getProjects, getSiteSettings } from "@/lib/content";
 
 export default async function HomePage() {
   const [site, projects, experiences] = await Promise.all([getSiteSettings(), getProjects(), getExperiences()]);
-  // Projets mis en avant d'abord, puis les autres (du plus récent au plus ancien).
+  // Projets mis en avant d'abord, puis les autres (dans l'ordre défini, sinon du plus récent au plus ancien).
   const carouselProjects = [...projects.filter((p) => p.featured), ...projects.filter((p) => !p.featured)];
 
   return (

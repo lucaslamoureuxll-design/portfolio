@@ -82,10 +82,19 @@ collections:
       - { name: summary, label: Résumé (carte), widget: text }
       - { name: date, label: Date, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
       - { name: technologies, label: Technologies, widget: list, hint: "Une technologie par entrée — sert aux filtres." }
-      - { name: cover, label: Image de couverture, widget: image, required: false }
+      - { name: cover, label: Image de couverture (carte), widget: image, required: false }
+      - name: gallery
+        label: Galerie d'images (fiche projet)
+        label_singular: Image
+        widget: list
+        required: false
+        fields:
+          - { name: src, label: Image, widget: image }
+          - { name: caption, label: Légende, widget: string, required: false }
       - { name: github, label: Lien GitHub, widget: string, required: false }
       - { name: demo, label: Lien démo / site, widget: string, required: false }
       - { name: featured, label: Mettre en avant sur l'accueil, widget: boolean, default: false }
+      - { name: order, label: "Position (1 = en premier, vide = par date)", widget: number, value_type: int, required: false }
       - { name: draft, label: Brouillon (masqué), widget: boolean, default: false }
       - { name: body, label: Description détaillée, widget: markdown }
 
