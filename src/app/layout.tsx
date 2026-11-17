@@ -58,11 +58,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full flex-col font-sans">
         <ThemeProvider>
-          <div className="ambient" aria-hidden="true">
-            <span />
-            <span />
-            <span />
-          </div>
+          <div className="ambient" aria-hidden="true" />
           <GlassPointer />
           <a
             href="#contenu"

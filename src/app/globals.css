@@ -13,18 +13,18 @@
 
   /* Matériau « Liquid Glass » */
   --glass-bg: rgb(255 255 255 / 0.5);
-  --glass-bg-strong: rgb(255 255 255 / 0.7);
+  --glass-bg-strong: rgb(255 255 255 / 0.76);
   --glass-border: rgb(255 255 255 / 0.75);
   --glass-edge: rgb(15 18 30 / 0.08);
   --glass-highlight: rgb(255 255 255 / 0.9);
   --glass-shadow: 0 10px 30px -12px rgb(30 35 70 / 0.22), 0 2px 6px -2px rgb(30 35 70 / 0.08);
-  --glass-blur: 22px;
+  --glass-blur: 16px;
 
-  /* Taches de couleur du fond */
-  --blob-1: #8b9cff;
-  --blob-2: #f0a3d8;
-  --blob-3: #7fe0d1;
-  --blob-opacity: 0.4;
+  /* Halos de couleur du fond (dégradés fixes : aucun coût pendant le défilement) */
+  --ambient:
+    radial-gradient(ellipse 55vmax 50vmax at 5% 0%, rgb(139 156 255 / 0.45), transparent 70%),
+    radial-gradient(ellipse 45vmax 45vmax at 100% 45%, rgb(240 163 216 / 0.4), transparent 70%),
+    radial-gradient(ellipse 45vmax 40vmax at 40% 100%, rgb(127 224 209 / 0.4), transparent 70%);
 }
 
 .dark {
@@ -37,16 +37,16 @@
   --accent-foreground: #0b0c10;
 
   --glass-bg: rgb(28 31 44 / 0.42);
-  --glass-bg-strong: rgb(24 27 38 / 0.66);
+  --glass-bg-strong: rgb(24 27 38 / 0.74);
   --glass-border: rgb(255 255 255 / 0.14);
   --glass-edge: rgb(0 0 0 / 0.4);
   --glass-highlight: rgb(255 255 255 / 0.22);
   --glass-shadow: 0 14px 40px -14px rgb(0 0 0 / 0.7), 0 2px 8px -2px rgb(0 0 0 / 0.4);
 
-  --blob-1: #4f46e5;
-  --blob-2: #a21caf;
-  --blob-3: #0d9488;
-  --blob-opacity: 0.38;
+  --ambient:
+    radial-gradient(ellipse 55vmax 50vmax at 5% 0%, rgb(79 70 229 / 0.42), transparent 70%),
+    radial-gradient(ellipse 45vmax 45vmax at 100% 45%, rgb(162 28 175 / 0.38), transparent 70%),
+    radial-gradient(ellipse 45vmax 40vmax at 40% 100%, rgb(13 148 136 / 0.38), transparent 70%);
 }
 
 @theme inline {
@@ -67,41 +67,17 @@ html {
 
 /* ---------- Liquid Glass ---------- */
 
-/* Fond ambiant : taches de couleur floues que le verre vient « réfracter ». */
+/*
+ * Fond ambiant : halos de couleur que le verre vient « réfracter ».
+ * Dégradés statiques sur un calque fixe : rien n'est recalculé pendant le défilement.
+ */
 .ambient {
   position: fixed;
   inset: 0;
   z-index: -1;
-  overflow: hidden;
   pointer-events: none;
-  background: var(--background);
-}
-.ambient span {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(80px);
-  opacity: var(--blob-opacity);
-}
-.ambient span:nth-child(1) {
-  width: 55vmax;
-  height: 55vmax;
-  top: -20vmax;
-  left: -15vmax;
-  background: var(--blob-1);
-}
-.ambient span:nth-child(2) {
-  width: 45vmax;
-  height: 45vmax;
-  top: 20vh;
-  right: -18vmax;
-  background: var(--blob-2);
-}
-.ambient span:nth-child(3) {
-  width: 40vmax;
-  height: 40vmax;
-  bottom: -18vmax;
-  left: 20vw;
-  background: var(--blob-3);
+  background-color: var(--background);
+  background-image: var(--ambient);
 }
 
 @layer components {
@@ -120,8 +96,12 @@ html {
       inset 0 1px 0 var(--glass-highlight),
       inset 0 -1px 0 var(--glass-edge),
       var(--glass-shadow);
-    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
-    backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  }
+  /* Le flou d'arrière-plan est réservé aux contrôles (barre, boutons) : sur les grandes
+     cartes de contenu, il coûte cher à chaque image pendant le défilement pour un effet à peine visible. */
+  .glass {
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(170%);
+    backdrop-filter: blur(var(--glass-blur)) saturate(170%);
   }
   /* Surfaces de contenu : plus opaques pour garder un texte parfaitement lisible. */
   .glass-card {
@@ -174,8 +154,8 @@ html {
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
     }
-    .ambient span {
-      display: none;
+    .ambient {
+      background-image: none;
     }
   }
   @media (prefers-contrast: more) {
@@ -295,17 +275,6 @@ body {
 /* ---------- Animations (désactivées si l'utilisateur préfère réduire les mouvements) ---------- */
 
 @media (prefers-reduced-motion: no-preference) {
-  /* Le fond ambiant ondule lentement. */
-  .ambient span:nth-child(1) {
-    animation: drift-1 26s ease-in-out infinite alternate;
-  }
-  .ambient span:nth-child(2) {
-    animation: drift-2 32s ease-in-out infinite alternate;
-  }
-  .ambient span:nth-child(3) {
-    animation: drift-3 29s ease-in-out infinite alternate;
-  }
-
   /* Apparition des éléments au défilement — CSS pur, sans JavaScript. */
   @supports (animation-timeline: view()) {
     .reveal {
@@ -323,27 +292,10 @@ body {
   }
 }
 
-@keyframes drift-1 {
-  to {
-    transform: translate(12vw, 10vh) scale(1.1);
-  }
-}
-@keyframes drift-2 {
-  to {
-    transform: translate(-14vw, 14vh) scale(0.9);
-  }
-}
-@keyframes drift-3 {
-  to {
-    transform: translate(10vw, -16vh) scale(1.15);
-  }
-}
-
 @keyframes reveal {
   from {
     opacity: 0;
     transform: translateY(24px) scale(0.98);
-    filter: blur(6px);
   }
 }
 @keyframes fade-in {
@@ -385,7 +337,6 @@ body {
   inset: calc(var(--border-size) * -1);
   border: var(--border-size) solid transparent;
   border-radius: calc(var(--radius) * 1px);
-  background-attachment: fixed;
   background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -413,24 +364,6 @@ body {
     hsl(0 100% 100% / var(--border-light-opacity, 1)),
     transparent 100%
   );
-}
-
-[data-glow] [data-glow] {
-  position: absolute;
-  inset: 0;
-  will-change: filter;
-  opacity: var(--outer, 1);
-  border-radius: calc(var(--radius) * 1px);
-  border-width: calc(var(--border-size) * 20);
-  filter: blur(calc(var(--border-size) * 10));
-  background: none;
-  pointer-events: none;
-  border: none;
-}
-
-[data-glow] > [data-glow]::before {
-  inset: -10px;
-  border-width: 10px;
 }
 
 /* La carte en verre placée dans une GlowCard se pose au-dessus de la lueur. */

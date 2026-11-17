@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeftIcon, ArrowRightIcon, ExternalLinkIcon, GitHubIcon } from "@/components/icons";
-import { GlowPanel } from "@/components/glow-panel";
 import { Markdown } from "@/components/markdown";
 import { ProjectGallery } from "@/components/project-gallery";
 import { ProjectCover } from "@/components/project-cover";
@@ -90,7 +89,7 @@ export default async function ProjectPage({ params }: PageProps<"/projets/[slug]
         )}
       </header>
 
-      <GlowPanel className="my-10">
+      <div className="my-10">
         {project.gallery.length > 0 ? (
           <div className="glass-card rounded-[28px] p-2">
             <ProjectGallery images={project.gallery} title={project.title} ratio={project.galleryRatio} />
@@ -100,14 +99,12 @@ export default async function ProjectPage({ params }: PageProps<"/projets/[slug]
             <ProjectCover title={project.title} cover={project.cover} priority />
           </div>
         )}
-      </GlowPanel>
+      </div>
 
       {project.body && (
-        <GlowPanel>
-          <div className="glass-card rounded-[28px] p-6 sm:p-10">
-            <Markdown source={project.body} />
-          </div>
-        </GlowPanel>
+        <div className="glass-card rounded-[28px] p-6 sm:p-10">
+          <Markdown source={project.body} />
+        </div>
       )}
 
       {(previous || next) && (
