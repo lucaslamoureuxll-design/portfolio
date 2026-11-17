@@ -1,9 +1,9 @@
 ---
 kind: education
-role: Baccalauréat technologique
-organization: ""
+role: Baccalauréat technologique STI2D
+organization: Mention assez bien
 location: ""
-start: "2025"
+start: "2023"
 end: "2025"
 current: false
 technologies: []
