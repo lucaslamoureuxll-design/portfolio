@@ -36,7 +36,13 @@ export type SiteSettings = {
   resume?: string;
   socials: SocialLinks;
   skills?: { category: string; items: string[] }[];
-  seo: { title: string; description: string; keywords?: string[] };
+  seo: {
+    title: string;
+    description: string;
+    keywords?: string[];
+    /** Code de vérification Google Search Console (méthode « Balise HTML »). */
+    googleVerification?: string;
+  };
 };
 
 export type Project = {
