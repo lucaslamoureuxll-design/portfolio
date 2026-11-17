@@ -66,6 +66,7 @@ collections:
             fields:
               - { name: title, label: Titre de la page d'accueil, widget: string }
               - { name: description, label: Description, widget: text }
+              - { name: googleVerification, label: "Code de vérification Google Search Console", widget: string, required: false }
 
   - name: projects
     label: Projets

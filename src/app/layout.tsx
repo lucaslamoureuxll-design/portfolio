@@ -32,7 +32,10 @@ export async function generateMetadata(): Promise<Metadata> {
     alternates: { canonical: "/" },
     // Seul le site de production est indexé (pas les prévisualisations Vercel).
     robots: isProduction() ? { index: true, follow: true } : { index: false, follow: false },
-    verification: process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : undefined,
+    verification: (() => {
+      const google = process.env.GOOGLE_SITE_VERIFICATION || site.seo.googleVerification;
+      return google ? { google } : undefined;
+    })(),
     openGraph: {
       type: "profile",
       locale: "fr_FR",
