@@ -91,6 +91,7 @@ collections:
         fields:
           - { name: src, label: Image, widget: image }
           - { name: caption, label: Légende, widget: string, required: false }
+      - { name: galleryRatio, label: "Format des images (largeur/hauteur, ex. 16/9 ou 552/800)", widget: string, required: false }
       - { name: github, label: Lien GitHub, widget: string, required: false }
       - { name: demo, label: Lien démo / site, widget: string, required: false }
       - { name: featured, label: Mettre en avant sur l'accueil, widget: boolean, default: false }

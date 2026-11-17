@@ -46,6 +46,8 @@ export type Project = {
   cover?: string;
   /** Images de la fiche projet, affichées dans un diaporama. */
   gallery: GalleryImage[];
+  /** Format des images de la galerie, ex. "16/9" ou "552/800" pour des affiches en portrait. */
+  galleryRatio: string;
   github?: string;
   demo?: string;
   featured: boolean;
@@ -125,6 +127,9 @@ export async function getProjects(): Promise<Project[]> {
       technologies: toStringList(data.technologies),
       cover: data.cover || undefined,
       gallery: toGallery(data.gallery),
+      galleryRatio: /^\d+(\.\d+)?\/\d+(\.\d+)?$/.test(String(data.galleryRatio ?? "").replace(/\s/g, ""))
+        ? String(data.galleryRatio).replace(/\s/g, "")
+        : "1736/986",
       github: data.github || undefined,
       demo: data.demo || undefined,
       featured: Boolean(data.featured),
