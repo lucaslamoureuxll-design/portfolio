@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRightIcon } from "@/components/icons";
@@ -8,6 +9,13 @@ import { SocialLinks } from "@/components/social-links";
 import { TechBadge } from "@/components/tech-badge";
 import { Timeline } from "@/components/timeline";
 import { getExperiences, getProjects, getSiteSettings } from "@/lib/content";
+
+// Onglet du navigateur : « Accueil · Lucas Lamoureux ».
+// Titre complet : le modèle « %s · Nom » du layout ne s'applique pas à la page de même niveau.
+export async function generateMetadata(): Promise<Metadata> {
+  const site = await getSiteSettings();
+  return { title: { absolute: `Accueil · ${site.name}` } };
+}
 
 export default async function HomePage() {
   const [site, projects, experiences] = await Promise.all([getSiteSettings(), getProjects(), getExperiences()]);
