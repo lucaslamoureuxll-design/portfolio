@@ -33,9 +33,9 @@ export default async function ProjectPage({ params }: PageProps<"/projets/[slug]
   const index = projects.findIndex((p) => p.slug === slug);
   if (index === -1) notFound();
   const project = projects[index];
-  // Les projets sont triés du plus récent au plus ancien.
-  const newer = projects[index - 1];
-  const older = projects[index + 1];
+  // Précédent / suivant dans l'ordre d'affichage des projets.
+  const previous = projects[index - 1];
+  const next = projects[index + 1];
 
   return (
     <article className="mx-auto max-w-3xl">
@@ -50,7 +50,8 @@ export default async function ProjectPage({ params }: PageProps<"/projets/[slug]
 
       <header>
         <p className="text-sm text-muted">
-          {formatMonth(project.date)} · {readingTime(project.body)} min de lecture
+          {formatMonth(project.date)}
+          {project.body && ` · ${readingTime(project.body)} min de lecture`}
         </p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight text-balance sm:text-4xl">{project.title}</h1>
         <p className="mt-4 text-lg text-muted text-pretty">{project.summary}</p>
@@ -101,30 +102,32 @@ export default async function ProjectPage({ params }: PageProps<"/projets/[slug]
         )}
       </GlowPanel>
 
-      <GlowPanel>
-        <div className="glass-card rounded-[28px] p-6 sm:p-10">
-          <Markdown source={project.body} />
-        </div>
-      </GlowPanel>
+      {project.body && (
+        <GlowPanel>
+          <div className="glass-card rounded-[28px] p-6 sm:p-10">
+            <Markdown source={project.body} />
+          </div>
+        </GlowPanel>
+      )}
 
-      {(older || newer) && (
+      {(previous || next) && (
         <nav aria-label="Autres projets" className="mt-10 grid gap-4 sm:grid-cols-2">
-          {older ? (
-            <Link href={`/projets/${older.slug}`} className="glass glass-press group rounded-3xl p-5">
+          {previous ? (
+            <Link href={`/projets/${previous.slug}`} className="glass glass-press group rounded-3xl p-5">
               <span className="flex items-center gap-1.5 text-xs text-muted">
                 <ArrowLeftIcon className="size-3.5 transition group-hover:-translate-x-0.5" /> Projet précédent
               </span>
-              <span className="mt-1 block font-medium">{older.title}</span>
+              <span className="mt-1 block font-medium">{previous.title}</span>
             </Link>
           ) : (
             <span className="hidden sm:block" />
           )}
-          {newer && (
-            <Link href={`/projets/${newer.slug}`} className="glass glass-press group rounded-3xl p-5 text-right">
+          {next && (
+            <Link href={`/projets/${next.slug}`} className="glass glass-press group rounded-3xl p-5 text-right">
               <span className="flex items-center justify-end gap-1.5 text-xs text-muted">
                 Projet suivant <ArrowRightIcon className="size-3.5 transition group-hover:translate-x-0.5" />
               </span>
-              <span className="mt-1 block font-medium">{newer.title}</span>
+              <span className="mt-1 block font-medium">{next.title}</span>
             </Link>
           )}
         </nav>
