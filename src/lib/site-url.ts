@@ -3,12 +3,14 @@ export const PRODUCTION_URL = "https://www.lamoureux-lucas.com";
 
 /**
  * URL publique du site (SEO, sitemap, aperçus de partage…).
- * Sur Vercel (production comme prévisualisations), on renvoie toujours le domaine officiel :
- * les liens « canoniques » désignent ainsi une seule adresse aux moteurs de recherche.
+ * Sur Vercel (production comme prévisualisations), c'est toujours le domaine officiel :
+ * les moteurs de recherche ne voient ainsi qu'une seule adresse, même si une ancienne
+ * variable NEXT_PUBLIC_SITE_URL (ex. une adresse *.vercel.app) traîne dans les réglages.
+ * Ailleurs (local, autre hébergeur), NEXT_PUBLIC_SITE_URL permet de choisir l'adresse.
  */
 export function getSiteUrl(): string {
-  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
   if (process.env.VERCEL) return PRODUCTION_URL;
+  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
   return "http://localhost:3000";
 }
 
