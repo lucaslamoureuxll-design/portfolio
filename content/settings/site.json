@@ -7,6 +7,10 @@
   "location": "France",
   "available": true,
   "availabilityLabel": "Ouvert aux opportunités de stage",
+  "availabilityPeriods": [
+    "Du 26 avril au 18 juin 2027 (8 semaines)",
+    "Du 26 avril au 2 juillet 2027 (10 semaines)"
+  ],
   "email": "lucas.lamoureux.ll@gmail.com",
   "web3formsKey": "7af98998-de57-4d57-932f-7cd9fcac7212",
   "avatar": "/images/uploads/lucas-lamoureux-profil.jpg",

@@ -41,6 +41,7 @@ collections:
           - { name: location, label: Localisation, widget: string, required: false }
           - { name: available, label: "Afficher le badge « Disponible »", widget: boolean, default: true }
           - { name: availabilityLabel, label: Texte du badge, widget: string, required: false, default: "Ouvert aux opportunités de stage" }
+          - { name: availabilityPeriods, label: Périodes de disponibilité, widget: list, required: false, hint: "Une période par entrée, ex. Du 26 avril au 18 juin 2027 (8 semaines)" }
           - { name: email, label: E-mail de contact, widget: string }
           - { name: web3formsKey, label: "Clé Web3Forms (formulaire de contact)", widget: string, required: false, hint: "Clé gratuite sur web3forms.com. Vide = l'adresse e-mail s'affiche à la place du formulaire." }
           - { name: avatar, label: Photo de profil, widget: image, required: false }
