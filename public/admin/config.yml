@@ -46,6 +46,7 @@ collections:
           - { name: web3formsKey, label: "Clé Web3Forms (formulaire de contact)", widget: string, required: false, hint: "Clé gratuite sur web3forms.com. Vide = l'adresse e-mail s'affiche à la place du formulaire." }
           - { name: avatar, label: Photo de profil, widget: image, required: false }
           - { name: resume, label: CV (PDF), widget: file, required: false }
+          - { name: resumePreview, label: "Aperçu du CV (image de la 1re page)", widget: image, required: false }
           - name: socials
             label: Réseaux sociaux
             widget: object

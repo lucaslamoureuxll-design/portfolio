@@ -29,10 +29,12 @@ export function CommandPalette({
   projects,
   email,
   linkedin,
+  resume,
 }: {
   projects: PaletteProject[];
   email: string;
   linkedin?: string;
+  resume?: string;
 }) {
   const router = useRouter();
   const { resolvedTheme, setTheme } = useTheme();
@@ -126,6 +128,33 @@ export function CommandPalette({
         },
       },
     ];
+    if (resume) {
+      list.push(
+        {
+          id: "resume-view",
+          group: "Actions",
+          label: "Voir mon CV",
+          keywords: "cv curriculum resume pdf",
+          run: () => {
+            setOpen(false);
+            window.open(resume, "_blank", "noopener,noreferrer");
+          },
+        },
+        {
+          id: "resume-download",
+          group: "Actions",
+          label: "Télécharger mon CV (PDF)",
+          keywords: "cv curriculum resume pdf telecharger",
+          run: () => {
+            setOpen(false);
+            const link = document.createElement("a");
+            link.href = resume;
+            link.download = "CV-Lucas-Lamoureux.pdf";
+            link.click();
+          },
+        },
+      );
+    }
     if (linkedin) {
       list.push({
         id: "linkedin",
@@ -139,7 +168,7 @@ export function CommandPalette({
       });
     }
     return list;
-  }, [projects, email, linkedin, resolvedTheme, router, setTheme]);
+  }, [projects, email, linkedin, resume, resolvedTheme, router, setTheme]);
 
   const results = useMemo(() => {
     const terms = normalize(query).split(/\s+/).filter(Boolean);

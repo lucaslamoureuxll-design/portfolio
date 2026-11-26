@@ -36,6 +36,8 @@ export type SiteSettings = {
   web3formsKey?: string;
   avatar?: string;
   resume?: string;
+  /** Image d'aperçu de la première page du CV. */
+  resumePreview?: string;
   socials: SocialLinks;
   skills?: { category: string; items: string[] }[];
   seo: {
