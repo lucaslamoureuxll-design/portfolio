@@ -6,6 +6,7 @@ import { ArrowRightIcon } from "@/components/icons";
 import { PersonJsonLd } from "@/components/json-ld";
 import { GlowPanel } from "@/components/glow-panel";
 import { ProjectCarousel } from "@/components/project-carousel";
+import { ResumeCard } from "@/components/resume-card";
 import { SocialLinks } from "@/components/social-links";
 import { TechBadge } from "@/components/tech-badge";
 import { Timeline } from "@/components/timeline";
@@ -132,6 +133,13 @@ export default async function HomePage() {
               <Timeline items={experiences.slice(0, 3)} />
             </div>
           </GlowPanel>
+        </section>
+      )}
+
+      {/* CV */}
+      {site.resume && (
+        <section id="cv" aria-label="Mon CV" className="scroll-mt-28 pt-20 sm:pt-28">
+          <ResumeCard site={site} />
         </section>
       )}
     </>

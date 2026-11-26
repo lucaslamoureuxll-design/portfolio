@@ -78,6 +78,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             projects={projects.map(({ slug, title, technologies }) => ({ slug, title, technologies }))}
             email={site.email}
             linkedin={site.socials.linkedin || undefined}
+            resume={site.resume || undefined}
           />
         </ThemeProvider>
       </body>
