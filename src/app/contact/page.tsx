@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/contact-form";
+import { Availability } from "@/components/availability";
 import { CopyEmailButton } from "@/components/copy-email-button";
 import { GlowPanel } from "@/components/glow-panel";
 import { PageHeading } from "@/components/section-heading";
@@ -21,6 +22,7 @@ export default async function ContactPage() {
         <PageHeading eyebrow="Contact" title="Travaillons ensemble">
           Une question, une opportunité ou simplement envie d&apos;échanger ? Je réponds généralement sous 48 h.
         </PageHeading>
+        <Availability site={site} className="mb-8 -mt-4" />
         <p className="text-sm text-muted">Mon adresse e-mail :</p>
         <div className="mt-3">
           <CopyEmailButton email={site.email} />

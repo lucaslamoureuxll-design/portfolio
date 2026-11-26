@@ -29,6 +29,8 @@ export type SiteSettings = {
   location?: string;
   available?: boolean;
   availabilityLabel?: string;
+  /** Périodes de disponibilité affichées sous le badge (ex. dates de stage). */
+  availabilityPeriods?: string[];
   email: string;
   /** Clé publique Web3Forms du formulaire de contact (conçue pour être visible dans le site). */
   web3formsKey?: string;

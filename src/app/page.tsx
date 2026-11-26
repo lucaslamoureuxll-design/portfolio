@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { Availability } from "@/components/availability";
 import { ArrowRightIcon } from "@/components/icons";
 import { PersonJsonLd } from "@/components/json-ld";
 import { GlowPanel } from "@/components/glow-panel";
@@ -28,15 +29,7 @@ export default async function HomePage() {
       {/* Hero */}
       <section className="flex flex-col-reverse gap-10 pb-20 sm:pb-28 md:flex-row md:items-center md:justify-between">
         <div className="max-w-2xl">
-          {site.available && (
-            <p className="glass mb-6 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm text-muted">
-              <span className="relative flex size-2">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500 opacity-60" />
-                <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
-              </span>
-              {site.availabilityLabel || "Disponible pour de nouveaux projets"}
-            </p>
-          )}
+          <Availability site={site} className="mb-6" />
           <h1 className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
             {site.name}
             <span className="block text-muted">{site.role}</span>
